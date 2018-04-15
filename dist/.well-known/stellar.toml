@@ -1,0 +1,8 @@
+# stellar.toml example asset
+[[CURRENCIES]]
+code="XERCISE"
+issuer="GCVZ65LA7M74ET2BGXNCX6ARSZP3733TOKA46CQUBKYDFTOD4TGV4M6V"
+display_decimals=2
+name="HealthHero Exercise Credit"
+desc="1 XERCISE token represents one workout."
+conditions="We check an image that you upload before issuing any credit"

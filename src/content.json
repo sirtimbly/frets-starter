@@ -1,0 +1,36 @@
+{
+  "questions": {
+    "1": {
+      "title": "Sleep",
+      "description": "Rate the overall quality of your sleep, where \"10\" means \"very high quality\" and \"1\" means \"very low quality.\""
+    },
+    "2": {
+      "title": "Weight Management",
+      "description": "How would you rate your consistency in sticking with your weight management program,  where  \"10\" means I am very consistent, while  \"1\" means I am very inconsistent."
+    },
+    "3": {
+      "title": "Stress",
+      "description": "How would you rate your consistency minimizing stress in your life,  where  \"10\" means I am very consistent, while  \"1\" means I am very inconsistent.",
+    },
+    "4": {
+      "title": "Mindset",
+      "description": "How would you rate your consistency in maintaining a positive mindset pertaining to your health & wellness where  \"10\" means I am very consistent, while  \"1\" means I am very inconsistent."
+    },
+    "5": {
+      "title": "Exercise",
+      "description": "How would you rate the quality of exercise you are getting on a 10-point scale, where \"10\" means I consistently get at least 3 days a week of high intensity exertion interspersed with rest, totaling at least 12 minutes.  \"1\" means I consistently fall short of that goal."
+    },
+    "6": {
+      "title": "Hydration",
+      "description": "How would you rate your consistency in sticking with your hydration program,  where  \"10\" means I am very consistent, while  \"1\" means I am very inconsistent."
+    },
+    "7": {
+      "title": "Nutrition",
+      "description": "How would you rate your consistency in consuming all required vitamins and minerals,  where  \"10\" means I am very consistent, while  \"1\" means I am very inconsistent."
+    },
+    "8": {
+      "title": "Digestion",
+      "description": "How would you rate your consistency in sticking with your digestive health program,  where  \"10\" means I am very consistent, while  \"1\" means I am very inconsistent."
+    }
+  }
+}
