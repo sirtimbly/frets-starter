@@ -1,6 +1,6 @@
-import { IFretsProps } from "frets";
+import { IFretsProps, PropsWithFields } from "frets";
 
-export default class LoggingProps implements IFretsProps<SampleScreens> {
+export default class LoggingProps extends PropsWithFields implements IFretsProps<SampleScreens> {
   public screens: SampleScreens[] = [SampleScreens.Home,
                                      SampleScreens.About];
   public activeScreen: SampleScreens = SampleScreens.Home;

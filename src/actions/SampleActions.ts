@@ -1,6 +1,7 @@
+import { ActionsWithFields } from "../../node_modules/frets";
 import { SampleScreens } from "../models/AppProps";
 
-export class SampleActions {
+export class SampleActions extends ActionsWithFields {
 
   public navHome: (e: Event) => boolean;
   public navAbout: (e: Event) => boolean;
