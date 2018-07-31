@@ -72,3 +72,11 @@ Tachyons styles starter
 
 /* Uncomment out the line below to help debug layout issues */
 /* @import '_debug'; */
+
+body {
+  font-family: sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
