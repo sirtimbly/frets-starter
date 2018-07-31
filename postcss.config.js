@@ -3,7 +3,9 @@ var postcss = require('postcss')
 module.exports = {
   // parser: file.extname === '.sss' ? 'sugarss' : false,
   plugins: {
-    'postcss-import': {},
+    'postcss-import': {
+      path: ['node_modules/tachyons/src/']
+    },
     'postcss-fontpath': {},
     'postcss-custom-media': {},
     'postcss-custom-properties': {},
@@ -15,6 +17,6 @@ module.exports = {
       preset: 'default',
   }
   },
-  input: 'src/base.css',
+  input: 'src/app.css',
   dir: 'dist'
 }
