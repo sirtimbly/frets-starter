@@ -2,8 +2,8 @@ import { $, $$ } from "../../app-styles";
 
 import { IFretsProps } from "frets";
 import { VNode } from "maquette";
-import { SampleActions } from "../../actions/SampleActions";
-import { SampleScreens } from "../../models/AppProps";
+import { RootActions } from "../../actions/RootActions";
+import { HortusScreens } from "../../models/AppProps";
 
 export const MenuItem = (labelNodes: Array<string | VNode>,
   subNodes: Array<string | VNode>,
@@ -11,7 +11,7 @@ export const MenuItem = (labelNodes: Array<string | VNode>,
   clickFn: (e: Event) => boolean): VNode => {
   return $.div.mv1.h([
     $$("button.underline-hover").pa2.bgTransparent.bNone.f6.br2.h({
-      classes: $$().when(isActive).blue.b.toObj(),
+      classes: $$().when(isActive).lightestBlue.b.toObj(),
       onclick: clickFn,
     },
       labelNodes),
@@ -19,12 +19,15 @@ export const MenuItem = (labelNodes: Array<string | VNode>,
   ]);
 };
 
-export const Menu = (props: IFretsProps<SampleScreens>,
+export const Menu = (props: IFretsProps<HortusScreens>,
   isHorizontal: boolean = false,
-  actions: SampleActions): VNode => {
+  actions: RootActions): VNode => {
   const nodes = [];
-  props.screens.forEach((x: SampleScreens) => {
-    nodes.push(MenuItem([SampleScreens[x]], null, props.activeScreen === x, actions.screenActions[x]));
-  });
+  if (props.screens) {
+
+    props.screens.forEach((x: HortusScreens) => {
+      nodes.push(MenuItem([HortusScreens[x]], null, props.activeScreen === x, actions.screenActions[x]));
+    });
+  }
   return $$("nav").mb1.mr2.h(nodes);
 };
