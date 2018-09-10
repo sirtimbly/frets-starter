@@ -19,6 +19,7 @@ return {
     },
     devServer: {
         contentBase: __dirname + '/dist/',
+        historyApiFallback: true,
         port: 8080,
         proxy: {
             '/.netlify/functions/*': {

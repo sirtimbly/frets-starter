@@ -8,6 +8,11 @@ import AppProps, { SampleScreens } from "./models/AppProps";
 const startingCondition = new AppProps();
 const startingActions = new SampleActions();
 
+export const RouteKeys = {
+  About: "About",
+  Home: "Home",
+};
+
 const F = new FRETS<AppProps, SampleActions>(startingCondition, startingActions);
 
 F.validator = (newProps: AppProps, oldProps: AppProps): [AppProps, boolean] => {
@@ -43,20 +48,46 @@ F.actions.decrement = F.registerAction((e: Event, props: AppProps): AppProps => 
   return props;
 });
 
+// F.actions.navAbout = F.registerAction((e: Event, props: AppProps): AppProps => {
+//   console.log("nav about");
+//   props.activeScreen = SampleScreens.About;
+//   return props;
+// });
+
+// F.actions.navHome = F.registerAction((e: Event, props: AppProps): AppProps => {
+//   console.log("nav home");
+//   props.activeScreen = SampleScreens.Home;
+//   return props;
+// });
+
+
 F.actions.navAbout = F.registerAction((e: Event, props: AppProps): AppProps => {
   console.log("nav about");
+  F.navToRoute(RouteKeys.About);
   props.activeScreen = SampleScreens.About;
   return props;
 });
 
 F.actions.navHome = F.registerAction((e: Event, props: AppProps): AppProps => {
   console.log("nav home");
+  F.navToRoute(RouteKeys.Home);
   props.activeScreen = SampleScreens.Home;
   return props;
 });
 
 F.actions.screenActions[SampleScreens.Home] = F.actions.navHome;
 F.actions.screenActions[SampleScreens.About] = F.actions.navAbout;
+
+F.registerRoute(RouteKeys.Home, "/", (name, params, props) => {
+  props.activeScreen = SampleScreens.Home;
+  return props;
+});
+
+F.registerRoute(RouteKeys.About, "/about", (name, params, props) => {
+  props.activeScreen = SampleScreens.About;
+  return props;
+});
+
 
 F.registerView(renderRootView);
 F.mountTo("mainapp");

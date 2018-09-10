@@ -33,7 +33,8 @@ export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
 
 const renderHome = (props: AppProps, actions: SampleActions) =>
   HPanel([
-    $.div.bgLightGray.rounded.p1.mx2.h2.h([props.counter.toFixed()]),
+
+    $.div.bgLightGray.rounded.p1.mx1.h2.h([props.counter.toFixed() + " hours"]),
     $.button.btn.btnOutline.h(
       {
         onclick: actions.decrement,
@@ -46,6 +47,7 @@ const renderHome = (props: AppProps, actions: SampleActions) =>
       },
       ["+"],
     ),
+    $.div.bgLightBlue.rounded.mx1.p1.h2.h([props.timeCounter]),
   ]);
 
 const renderAbout = (props: AppProps, actions: SampleActions) => Panel([
