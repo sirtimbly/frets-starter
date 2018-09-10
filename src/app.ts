@@ -10,9 +10,22 @@ const startingActions = new SampleActions();
 
 const F = new FRETS<AppProps, SampleActions>(startingCondition, startingActions);
 
-F.validator = (newProps: AppProps, oldProps: AppProps): AppProps => {
-
-  return newProps;
+F.validator = (newProps: AppProps, oldProps: AppProps): [AppProps, boolean] => {
+  const messages: string[] = [];
+  let result;
+  let isValid = true;
+  if (newProps.counter < 0) {
+    isValid = false;
+    messages.push("Can't set counter to less than 0.");
+  }
+  // reject all changes by default, but merge in new validation messages
+  if (isValid) {
+    result = Object.assign({}, newProps);
+  } else {
+    result = Object.assign({}, oldProps);
+  }
+  result.messages = messages;
+  return [result,  isValid];
 };
 
 F.calculator = (props: AppProps, oldProps: AppProps): AppProps => {
@@ -44,7 +57,6 @@ F.actions.navHome = F.registerAction((e: Event, props: AppProps): AppProps => {
 
 F.actions.screenActions[SampleScreens.Home] = F.actions.navHome;
 F.actions.screenActions[SampleScreens.About] = F.actions.navAbout;
-
 
 F.registerView(renderRootView);
 F.mountTo("mainapp");
