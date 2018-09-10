@@ -2,22 +2,22 @@ import { $, $$ } from "../base-styles";
 
 import { VNode } from "maquette";
 
-import { ViewActions } from "frets";
+import { FRETS } from "frets";
 import { SampleActions } from "../actions/SampleActions";
 
 import AppProps, { SampleScreens } from "../models/AppProps";
 import { HPanel, Icons, Menu, Panel } from "./UiAtoms";
 
-export const renderRootView = (props: AppProps, actions: SampleActions): VNode => {
-  let component: VNode;
+export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
+  const { modelProps: props, actions } = app;
 
   return $.div.flex.flexColumn.h([
     $.div.bgSilver.p2.borderBottom.borderGray.shadow.flex.justifyBetween.Bold.h([
-      $.div.h(["My FRETS App"])
+      $.div.h(["My FRETS App"]),
     ]),
-    props.messages
+    props.messages.length
       ? $.div.h5.bgOrange.block.p2.white.Bold.h(
-          props.messages.map((s: string) => $.div.h([s]))
+          props.messages.map((s: string) => $.div.h([s])),
         )
       : "",
     $.div.flex.h([
