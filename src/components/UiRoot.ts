@@ -17,7 +17,7 @@ export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
     ]),
     props.messages.length
       ? $.div.h5.bgOrange.block.p2.white.Bold.h(
-          props.messages.map((s: string) => $.div.h([s])),
+          props.messages.map((s: string) => $.div.h({key: s},[s])),
         )
       : "",
     $.div.flex.h([
@@ -31,10 +31,9 @@ export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
   ]);
 };
 
-const renderHome = (props: AppProps, actions: SampleActions) =>
-  HPanel([
+const renderHome = (props: AppProps, actions: SampleActions) => Panel(null, null,
+  HPanel({ key: "incrementer" },
 
-    $.div.bgLightGray.rounded.p1.mx1.h2.h([props.counter.toFixed() + " hours"]),
     $.button.btn.btnOutline.h(
       {
         onclick: actions.decrement,
@@ -47,14 +46,20 @@ const renderHome = (props: AppProps, actions: SampleActions) =>
       },
       ["+"],
     ),
-    $.div.bgLightBlue.rounded.mx1.p1.h2.h([props.timeCounter]),
-  ]);
+    $.div.bgLightGray.rounded.p1.mx1.h2.h([props.counter.toFixed() + " hours"]),
+    $.div.h([$.div.bgLightBlue.rounded.mx1.p1.h2.h([props.timeCounter])]),
+  ),
+  HPanel({ key: "fakeData"},
+    $.button.btn.btnOutline.rounded.p1.m1.h({ onclick: actions.loadUser}, ["Fetch Fake Data"]),
+    $.div.bgLightGray.rounded.p1.m1.h(["Username: " + props.username]),
+  ),
+);
 
-const renderAbout = (props: AppProps, actions: SampleActions) => Panel([
+const renderAbout = (props: AppProps, actions: SampleActions) => Panel(null, null,
     $$("h2").h(["About FRETS"]),
     $$("p").gray.borderTop.pt2.h([`See the documentation online at`]),
     $$("a").h({
       href: "https://github.com/sirtimbly/frets",
       target: "_blank",
     }, ["github.com/sirtimbly/frets"]),
-  ]);
+  );

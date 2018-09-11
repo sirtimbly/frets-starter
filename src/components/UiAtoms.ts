@@ -1,5 +1,5 @@
 import { IFretsProps } from "frets";
-import { VNode } from "maquette";
+import { VNode, VNodeProperties } from "maquette";
 import { $, $$ } from "../base-styles";
 import { SampleScreens } from "../models/AppProps";
 import { SampleActions } from "../actions/SampleActions";
@@ -21,20 +21,22 @@ export const Icons = {
  * Panel
  * @param nodes
  */
-export const Panel = (nodes: Array<string | VNode>, isHoriz: boolean = false): VNode => {
+export const Panel = (isHoriz?: boolean,
+                      properties?: VNodeProperties,
+                      ...nodes: Array<string | VNode>): VNode => {
   let node = $.div.bgWhite.shadow.p3.my2.rounded;
   if (isHoriz) {
     node = node.flex.alignMiddle.justifyCenter;
   }
-  return node.h(nodes);
+  return node.h(properties, nodes);
 };
 
 /**
  * Horizontal Flex Layout Panel
  * @param nodes;
  */
-export const HPanel = (nodes: Array<string | VNode>): VNode => {
-  return Panel(nodes, true);
+export const HPanel = (properties?: VNodeProperties, ...nodes: Array<string | VNode>): VNode => {
+  return Panel(true, properties, ...nodes);
 };
 
 export const MenuItem = (labelNodes: Array<string | VNode>,

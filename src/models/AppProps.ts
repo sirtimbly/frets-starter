@@ -1,6 +1,6 @@
 import { IFretsProps, PropsWithFields } from "frets";
 
-export default class MyProps extends PropsWithFields {
+export default class AppProps extends PropsWithFields {
   public screens: SampleScreens[] = [SampleScreens.Home,
                                      SampleScreens.About];
   public activeScreen: SampleScreens = SampleScreens.Home;

@@ -4,19 +4,15 @@ import * as moment from "moment";
 import { SampleActions } from "./actions/SampleActions";
 import { renderRootView } from "./components/UiRoot";
 import AppProps, { SampleScreens } from "./models/AppProps";
+import { registerRoutes } from "./navigation";
 
 const startingCondition = new AppProps();
 const startingActions = new SampleActions();
 
-export const RouteKeys = {
-  About: "About",
-  Home: "Home",
-};
-
 const F = new FRETS<AppProps, SampleActions>(startingCondition, startingActions);
 
 F.validator = (newProps: AppProps, oldProps: AppProps): [AppProps, boolean] => {
-  const messages: string[] = [];
+  let messages: string[] = [];
   let result;
   let isValid = true;
   if (newProps.counter < 0) {
@@ -34,7 +30,7 @@ F.validator = (newProps: AppProps, oldProps: AppProps): [AppProps, boolean] => {
 };
 
 F.calculator = (props: AppProps, oldProps: AppProps): AppProps => {
-  props.timeCounter = moment().add(props.counter, "hours").toLocaleString();
+  props.timeCounter = moment().add(props.counter, "hours").format("ddd h a");
   return props;
 };
 
@@ -48,46 +44,20 @@ F.actions.decrement = F.registerAction((e: Event, props: AppProps): AppProps => 
   return props;
 });
 
-// F.actions.navAbout = F.registerAction((e: Event, props: AppProps): AppProps => {
-//   console.log("nav about");
-//   props.activeScreen = SampleScreens.About;
-//   return props;
-// });
-
-// F.actions.navHome = F.registerAction((e: Event, props: AppProps): AppProps => {
-//   console.log("nav home");
-//   props.activeScreen = SampleScreens.Home;
-//   return props;
-// });
-
-
-F.actions.navAbout = F.registerAction((e: Event, props: AppProps): AppProps => {
-  console.log("nav about");
-  F.navToRoute(RouteKeys.About);
-  props.activeScreen = SampleScreens.About;
+F.actions.loadUser = F.registerAction((e: Event, props: AppProps) => {
+  fetch("https://jsonplaceholder.typicode.com/users")
+    .then(response => response.json())
+    .then(json => {
+      const user = json[(Math.random() * 10).toFixed()];
+      console.log("recieved fetch");
+      props.username = user.username,
+      F.render(props);
+    });
   return props;
-});
+})
 
-F.actions.navHome = F.registerAction((e: Event, props: AppProps): AppProps => {
-  console.log("nav home");
-  F.navToRoute(RouteKeys.Home);
-  props.activeScreen = SampleScreens.Home;
-  return props;
-});
-
-F.actions.screenActions[SampleScreens.Home] = F.actions.navHome;
-F.actions.screenActions[SampleScreens.About] = F.actions.navAbout;
-
-F.registerRoute(RouteKeys.Home, "/", (name, params, props) => {
-  props.activeScreen = SampleScreens.Home;
-  return props;
-});
-
-F.registerRoute(RouteKeys.About, "/about", (name, params, props) => {
-  props.activeScreen = SampleScreens.About;
-  return props;
-});
-
+registerRoutes(F);
 
 F.registerView(renderRootView);
 F.mountTo("mainapp");
+

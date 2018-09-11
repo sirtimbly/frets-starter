@@ -7,6 +7,7 @@ export class SampleActions extends ActionsWithFields {
   public navAbout: (e: Event) => boolean;
   public increment: (e: Event) => boolean;
   public decrement: (e: Event) => boolean;
+  public loadUser: (e: Event) => boolean;
 
   public activeScreen: SampleScreens = SampleScreens.Home;
 
