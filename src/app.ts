@@ -45,12 +45,18 @@ F.actions.decrement = F.registerAction((e: Event, props: AppProps): AppProps => 
 });
 
 F.actions.loadUser = F.registerAction((e: Event, props: AppProps) => {
-  fetch("https://jsonplaceholder.typicode.com/users")
+  const id = props.registeredFieldsValues["id"];
+  fetch("https://jsonplaceholder.typicode.com/users/" + id)
     .then(response => response.json())
     .then(json => {
-      const user = json[(Math.random() * 10).toFixed()];
       console.log("recieved fetch");
-      props.username = user.username,
+      let user;
+      if (json && json.length) {
+        user = json[(Math.random() * Number.parseInt(json.length)).toFixed()];
+      } else {
+        user = json;
+      }
+      props.username = user.username;
       F.render(props);
     });
   return props;
