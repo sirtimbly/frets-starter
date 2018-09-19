@@ -13,7 +13,7 @@
     "server:dev": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d",
     "server:prod": "cross-env NODE_ENV=production node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js -p",
     "build:dev": "cross-env NODE_ENV=development webpack -d",
-    "build:prod": "cross-env NODE_ENV=production webpack -p && npm run css && ./node_modules/.bin/tsc -p src/server/",
+    "build:prod": "cross-env NODE_ENV=production webpack -p && npm run css",
     "test": "jest",
     "css": "postcss src/base.css -c postcss.config.js -o dist/base.css",
     "base": "frets-styles-generator src/base.css src/base-styles.ts",
