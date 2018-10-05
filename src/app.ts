@@ -66,4 +66,3 @@ registerRoutes(F);
 
 F.registerView(renderRootView);
 F.mountTo("mainapp");
-
