@@ -10,7 +10,18 @@ export class AppDomain {
     newCollection.splice(foundLocation, (foundLocation >= 0 ? 1 : 0), newValue);
     return newCollection;
   }
+
 }
+
+export const FieldNames = {
+  NewItemName: "NewItemName",
+  GetItemFieldKey(name: string) {
+    return "item-" + name;
+  },
+  GetItemAxisFieldKey(itemName: string, axisName: string) {
+    return itemName + "-" + axisName;
+  },
+};
 
 export interface IPayloadItem { Item?: Item; }
 export interface IPayloadAxis { Axis?: Axis; }

@@ -5,15 +5,18 @@ import { $, $$ } from "../../app-styles";
 import { SampleActions } from "../../actions/SampleActions";
 import AppProps from "../../models/AppProps";
 
-import { AxisValues, Item } from '../../models/Item';
-import { AppDomain } from '../../models/Domain';
+import { AppDomain, FieldNames } from "../../models/Domain";
+import { AxisValues, Item } from "../../models/Item";
 
 const domain = new AppDomain();
 
 export function ItemEditor(app: FRETS<AppProps, SampleActions>): VNode {
-  return $.div.h(app.modelProps.items.map((i: Item) => {
+  const list = app.modelProps.items.map((i: Item) => {
     const itemNameField = app.registerField<string>("item-" + i.name, i.name);
-    return $.div.mv1.pa1.flex.h([
+    return $.div.mv1.pa1.flex.h({
+      key: i.name,
+    },
+    [
       inputLabel("Item Name: ",
         $.input.ba.ml1.h({
           // onblur: app.actions.updateItem,
@@ -30,7 +33,26 @@ export function ItemEditor(app: FRETS<AppProps, SampleActions>): VNode {
       ),
       ...getAxisEditors(app, i.axisValues, i.name),
     ]);
-  }));
+  });
+  const field = app.registerField<string>(FieldNames.NewItemName);
+  list.push($.div.bgLightGreen.pa1.ma1.h([
+    $.input.ba.h({
+      classes: $.when(!!field.validationErrors.length).red.bRed.toObj(),
+      oninput: field.handler,
+      onkeydown: (ev: KeyboardEvent) => {
+        if (ev.key === "Enter") {
+          app.actions.addItem(ev);
+        }
+      },
+      value: field.value,
+    }),
+    $.button.h({
+      disabled: !!field.validationErrors.length,
+      onclick: app.actions.addItem,
+    }, ["Add Item"]),
+    field.validationErrors.length ? $.span.red.h(field.validationErrors) : "",
+  ]));
+  return $.div.h(list);
 }
 
 function getAxisEditors(app: FRETS<AppProps, SampleActions>, axisValues: AxisValues, itemName: string): VNode[] {
