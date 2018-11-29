@@ -1,4 +1,4 @@
-import { $, $$ } from "../base-styles";
+import { $, $$ } from "../app-styles";
 
 import { VNode } from "maquette";
 
@@ -6,70 +6,42 @@ import { FRETS } from "frets";
 import { SampleActions } from "../actions/SampleActions";
 
 import AppProps, { SampleScreens } from "../models/AppProps";
-import { HPanel, Icons, Menu, Panel } from "./UiAtoms";
+import { HPanel, Icons, Panel } from "./UiAtoms";
 import { IRegisteredField } from "frets/build/main/Frets";
+import { ItemEditor } from "./ItemEditor/ItemEditor";
+import { ChartPlot } from "./ChartPlot/ChartPlot";
 
 export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
   const { modelProps: props, actions } = app;
   const idField = app.registerField<string>("id", "1");
   return $.div.flex.flexColumn.h([
-    $.div.bgSilver.p2.borderBottom.borderGray.shadow.flex.justifyBetween.Bold.h([
-      $.div.h(["My FRETS App"]),
+    $.div.bgSilver.pa2.brBottom.bDarkGray.flex.justifyBetween.f2.h([
+      $.div.h(["Decision Maker"]),
     ]),
     props.messages.length
-      ? $.div.h5.bgOrange.block.p2.white.Bold.h(
-          props.messages.map((s: string) => $.div.h({key: s},[s])),
+      ? $.div.h5.bgOrange.pa2.white.f2.h(
+          props.messages.map((s: string) => $.div.h({key: s}, [s])),
         )
       : "",
     $.div.flex.h([
-      $.div.col_3.pt2.h([Menu(props, false, actions)]),
-      $.div.col_9.pr2.h([
+      $.div.pt2.h(["...Menu Here"]),
+      $.div.pr2.h([
         (props.activeScreen === SampleScreens.Home)
-          ? renderHome(props, actions, idField)
+          ? renderHome(app)
           : renderAbout(props, actions),
       ]),
     ]),
   ]);
 };
 
-const renderHome = (props: AppProps, actions: SampleActions, idField: IRegisteredField<string>) => {
+const renderHome = (app: FRETS<AppProps, SampleActions>) => {
+  return $.div.h([
+    Panel(false, {}, ItemEditor(app)),
+    Panel(false, {}, ChartPlot(app)),
+  ]);
 
-  return Panel(null, null,
-    HPanel({ key: "incrementer" },
-      $.button.btn.btnOutline.h(
-        {
-          onclick: actions.decrement,
-        },
-        ["-"],
-      ),
-      $.button.btn.btnOutline.ml2.h(
-        {
-          onclick: actions.increment,
-        },
-        ["+"],
-      ),
-      $.div.bgLightGray.rounded.p1.mx1.h2.h([props.counter.toFixed() + " hours"]),
-      $.div.h([$.div.bgLightBlue.rounded.mx1.p1.h2.h([props.timeCounter])]),
-    ),
-    HPanel({ key: "fakeData"},
-      $.label.m1.h(["UserId",
-        $.input.h({
-          onblur: idField.handler,
-          value: idField.value,
-        }),
-      ]),
-      $.button.btn.btnOutline.rounded.p1.m1.h({ onclick: actions.loadUser}, ["Fetch API Data"]),
-      $.div.bgLightGray.rounded.p1.m1.h(["Username: " + props.username]),
-    ),
-  );
-  }
-
+};
 
 const renderAbout = (props: AppProps, actions: SampleActions) => Panel(null, null,
-    $$("h2").h(["About FRETS"]),
-    $$("p").gray.borderTop.pt2.h([`See the documentation online at`]),
-    $$("a").h({
-      href: "https://github.com/sirtimbly/frets",
-      target: "_blank",
-    }, ["github.com/sirtimbly/frets"]),
+    $$("h2").h(["About The APp"]),
   );

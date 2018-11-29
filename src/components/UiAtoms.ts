@@ -1,6 +1,6 @@
 import { IFretsProps } from "frets";
 import { VNode, VNodeProperties } from "maquette";
-import { $, $$ } from "../base-styles";
+import { $, $$ } from "../app-styles";
 
 
 export const icon = (name: string): VNode => {
@@ -23,9 +23,9 @@ export const Icons = {
 export const Panel = (isHoriz?: boolean,
                       properties?: VNodeProperties,
                       ...nodes: Array<string | VNode>): VNode => {
-  let node = $.div.bgWhite.shadow.p3.my2.rounded;
+  let node = $.div.bgWhite.pa3.mv2.ba.bBlack_025.br3.shadow_2;
   if (isHoriz) {
-    node = node.flex.alignMiddle.justifyCenter;
+    node = node.flex.center.justifyCenter;
   }
   return node.h(properties, nodes);
 };
@@ -42,13 +42,13 @@ export const MenuItem = (labelNodes: Array<string | VNode>,
                          subNodes: Array<string | VNode>,
                          isActive: boolean = false,
                          clickFn: (e: Event) => boolean): VNode => {
-  return $.div.my1.h([
-    $.button.btn.p1.h6.gray.rounded.h({
-      classes: $$().when(isActive).blue.Bold.toObj(),
+  return $.div.mv1.h([
+    $.button.pa1.f5.gray.h({
+      classes: $$().when(isActive).blue.toObj(),
       onclick: clickFn,
     },
     labelNodes),
-    (subNodes) ? $.div.pl1.py1.h([subNodes]) : "",
+    (subNodes) ? $.div.pl1.pv1.h([subNodes]) : "",
   ]);
 };
 

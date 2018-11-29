@@ -50,7 +50,7 @@ return {
     module: {
 
         rules: [
-            { test: /\.tsx?$/, loader: "babel-loader!ts-loader" }
+            { test: /\.tsx?$/, loader: "ts-loader" }
         ].concat((() => {
                 if (production) {
                     console.log("I'm ignore css because it's prod")

@@ -5,8 +5,6 @@ export class SampleActions extends ActionsWithFields {
 
   public navHome: (e: Event) => boolean;
   public navAbout: (e: Event) => boolean;
-  public increment: (e: Event) => boolean;
-  public decrement: (e: Event) => boolean;
   public loadUser: (e: Event) => boolean;
 
   public activeScreen: SampleScreens = SampleScreens.Home;
@@ -15,5 +13,8 @@ export class SampleActions extends ActionsWithFields {
     0: this.navHome,
     1: this.navAbout,
   };
+  addItem: (e: Event) => any;
+  updateItem: (e: Event) => any;
+
 
 }

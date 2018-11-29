@@ -1,10 +1,15 @@
 
-import { FRETS } from "frets";
 import * as moment from "moment";
+
+import { FRETS } from "frets";
+
 import { SampleActions } from "./actions/SampleActions";
 import { renderRootView } from "./components/UiRoot";
 import AppProps, { SampleScreens } from "./models/AppProps";
+import { IPayloadItem } from "./models/Domain";
+import { Item } from "./models/Item";
 import { registerRoutes } from "./navigation";
+
 
 const startingCondition = new AppProps();
 const startingActions = new SampleActions();
@@ -30,37 +35,39 @@ F.validator = (newProps: AppProps, oldProps: AppProps): [AppProps, boolean] => {
 };
 
 F.calculator = (props: AppProps, oldProps: AppProps): AppProps => {
-  props.timeCounter = moment().add(props.counter, "hours").format("ddd h a");
+  for (let i = 0; i < props.axes.length; i++) {
+    const axis = props.axes[i];
+    props.items = props.items.map((item: Item): Item => {
+
+      if (!item.axisValues) {
+        item.axisValues = {};
+      }
+      if (!item.axisValues[axis.name]) {
+        item.axisValues[axis.name] = "0";
+      }
+      const axisFieldValue = props.registeredFieldsValues[item.name + "-" + axis.name];
+      if (axisFieldValue) {
+        item.axisValues[axis.name] = axisFieldValue;
+      }
+      const itemFieldValue = props.registeredFieldsValues["item-" + item.name];
+      if (itemFieldValue && itemFieldValue !== item.name) {
+        item.name = itemFieldValue;
+      }
+      return item;
+    });
+    console.log("Props calculated as: ", props);
+  }
   return props;
 };
 
-F.actions.increment = F.registerAction((e: Event, props: AppProps): AppProps => {
-  props.counter++;
-  return props;
-});
-
-F.actions.decrement = F.registerAction((e: Event, props: AppProps): AppProps => {
-  props.counter--;
-  return props;
-});
-
-F.actions.loadUser = F.registerAction((e: Event, props: AppProps) => {
-  const id = props.registeredFieldsValues["id"];
-  fetch("https://jsonplaceholder.typicode.com/users/" + id)
-    .then(response => response.json())
-    .then(json => {
-      console.log("recieved fetch");
-      let user;
-      if (json && json.length) {
-        user = json[(Math.random() * Number.parseInt(json.length)).toFixed()];
-      } else {
-        user = json;
-      }
-      props.username = user.username;
-      F.render(props);
-    });
-  return props;
-})
+// F.actions.addItem = F.registerAction((e: Event, props: AppProps) => {
+//   try {
+//     props.items = Upsert(props.items, "name", data.Item);
+//   } catch (err) {
+//     return new Context(_TAO.Error.Create.Web, { Error: err });
+//   }
+//   return false;
+// });
 
 registerRoutes(F);
 

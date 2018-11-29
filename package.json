@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start": "npm run server:dev",
-    "server:debug": "cross-env NODE_ENV=development webpack-dev-server ",
-    "server:dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "server:debug": "cross-env NODE_ENV=development webpack-dev-server --mode=development",
+    "server:dev": "cross-env NODE_ENV=development webpack-dev-server --mode=development",
     "server:prod": "cross-env NODE_ENV=production webpack-dev-server",
     "build:dev": "cross-env NODE_ENV=development webpack -d",
     "build:prod": "cross-env NODE_ENV=production webpack -p && npm run css",
@@ -88,14 +88,13 @@
     "typescript": "^3.0.3",
     "webpack": "^4.19.1",
     "webpack-bundle-analyzer": "^3.0.2",
+    "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.8"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "basscss": "^8.0.10",
-    "basscss-addons": "^1.0.0-beta4",
-    "basscss-basic": "^1.0.0",
     "maquette": "^3.3.1",
-    "moment": "^2.22.2"
+    "moment": "^2.22.2",
+    "tachyons": "^4.11.1"
   }
 }
