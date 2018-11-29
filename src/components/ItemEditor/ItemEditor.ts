@@ -19,14 +19,7 @@ export function ItemEditor(app: FRETS<AppProps, SampleActions>): VNode {
     [
       inputLabel("Item Name: ",
         $.input.ba.ml1.h({
-          // onblur: app.actions.updateItem,
           onblur: itemNameField.handler,
-
-          //   })
-          //   app.tao.propose(_TAO.Item.Update.Web.taople(), { Item: {
-          //     name: (ev.currentTarget as HTMLInputElement).value,
-          //   }});
-          // },
           type: "text",
           value: i.name,
         }),

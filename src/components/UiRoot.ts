@@ -19,12 +19,20 @@ export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
       $.div.h(["Decision Maker"]),
     ]),
     props.messages.length
-      ? $.div.h5.bgOrange.pa2.white.f2.h(
-          props.messages.map((s: string) => $.div.h({key: s}, [s])),
-        )
+      ? $.div.h5.bgOrange.pa2.white.f3.h([
+        ...props.messages.map((s: string) => $.div.h({key: s}, [s])),
+        $.button.h({onclick: app.actions.clearMessages}, ["✅ OK"]),
+      ])
       : "",
     $.div.flex.h([
-      $.div.pt2.h(["...Menu Here"]),
+      $.div.pt2.h([
+        !app.modelProps.isAuthenticated ? $.button.ma2.h({
+          onclick: app.actions.login,
+        }, ["Login"]) :
+        $.button.ma2.h({
+          onclick: app.actions.save,
+        }, ["Save"]),
+      ]),
       $.div.pr2.h([
         (props.activeScreen === SampleScreens.Home)
           ? renderHome(app)

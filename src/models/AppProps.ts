@@ -9,12 +9,13 @@ export default class AppProps extends PropsWithFields {
   public messages: string[];
 
   public isAuthenticated: boolean;
-  public username: boolean;
+  public owner_id: string;
   public counter: number = 0;
   public timeCounter: string;
   public items: Item[] = [new Item()];
   public axes: Axis[] = [new Axis("Difficulty"), new Axis("Benefit")];
-
+  public saving: boolean = false;
+  public saved: boolean = false;
 }
 
 export enum SampleScreens {

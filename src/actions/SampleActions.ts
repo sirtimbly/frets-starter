@@ -15,6 +15,10 @@ export class SampleActions extends ActionsWithFields {
   };
   addItem: (e: Event) => any;
   updateItem: (e: Event) => any;
+  login: (e: Event) => any;
+  save: (e: Event) => any;
+  clearMessages: (e: Event) => any;
+
 
 
 }

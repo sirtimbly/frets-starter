@@ -9,10 +9,12 @@ import AppProps, { SampleScreens } from "./models/AppProps";
 import { AppDomain, FieldNames } from './models/Domain';
 import { Item, AxisValues } from './models/Item';
 import { registerRoutes } from "./navigation";
+import DAL from './dal';
 
 const domain = new AppDomain();
 const startingCondition = new AppProps();
 const startingActions = new SampleActions();
+const dal = new DAL();
 
 const F = new FRETS<AppProps, SampleActions>(startingCondition, startingActions);
 
@@ -62,6 +64,13 @@ F.calculator = (props: AppProps, oldProps: AppProps): AppProps => {
     });
     console.log("Props calculated as: ", props);
   }
+  if (props.saving) {
+    props.messages = ["Saving... wait"];
+  }
+  if (props.saved) {
+    props.saving = false;
+    props.messages = ["Saved."];
+  }
   return props;
 };
 
@@ -83,6 +92,35 @@ F.actions.addItem = F.registerAction((e: Event, props: AppProps) => {
     };
   }
   return props;
+});
+
+F.actions.login = F.registerAction((e, props: AppProps): AppProps => {
+  console.log("Loggin In Now...");
+  let newData = props;
+  dal.loginAnon(props).then((results: Array<{}>|void ) => {
+    console.log("logged in: ", results);
+    if (results && results.length) {
+      newData = results[0] as AppProps;
+    }
+    newData.isAuthenticated = true;
+    newData.owner_id = dal.userId;
+    F.render(newData);
+  });
+  return props;
+});
+
+F.actions.save = F.registerAction((e, props: AppProps): AppProps => {
+  dal.updateDocument(props).then((result) => {
+    F.render({
+      ...props,
+      saved: true,
+    });
+  });
+  return {...props, saving: true};
+});
+
+F.actions.clearMessages = F.registerAction((e, props: AppProps): AppProps => {
+  return {...props, saving: false, saved: false};
 });
 
 registerRoutes(F);
