@@ -6,13 +6,13 @@ import { renderRootView } from "./components/UiRoot";
 import AppProps, { SampleScreens } from "./models/AppProps";
 import { registerRoutes } from "./navigation";
 
-const startingCondition = new AppProps();
+const startingCondition: AppProps = new AppProps();
 const startingActions = new SampleActions();
 
 const F = new FRETS<AppProps, SampleActions>(startingCondition, startingActions);
 
-F.validator = (newProps: AppProps, oldProps: AppProps): [AppProps, boolean] => {
-  let messages: string[] = [];
+F.validator = (newProps: Readonly<AppProps>, oldProps: AppProps): [AppProps, boolean] => {
+  const messages: string[] = [];
   let result;
   let isValid = true;
   if (newProps.counter < 0) {
@@ -29,41 +29,36 @@ F.validator = (newProps: AppProps, oldProps: AppProps): [AppProps, boolean] => {
   return [result,  isValid];
 };
 
-F.calculator = (props: AppProps, oldProps: AppProps): AppProps => {
-  props.timeCounter = moment().add(props.counter, "hours").format("ddd h a");
-  return props;
+F.calculator = (props: Readonly<AppProps>, oldProps: AppProps): AppProps => {
+  return { ...props, timeCounter: moment().add(props.counter, "hours").format("ddd h a") };
 };
 
-F.actions.increment = F.registerAction((e: Event, props: AppProps): AppProps => {
-  props.counter++;
-  return props;
+F.actions.increment = F.registerAction((e: Event, props: Readonly<AppProps>): AppProps => {
+  return { ...props, counter: props.counter + 1 };
 });
 
-F.actions.decrement = F.registerAction((e: Event, props: AppProps): AppProps => {
-  props.counter--;
-  return props;
+F.actions.decrement = F.registerAction((e: Event, props: Readonly<AppProps>): AppProps => {
+  return {...props, counter: props.counter - 1};
 });
 
-F.actions.loadUser = F.registerAction((e: Event, props: AppProps) => {
-  const id = props.registeredFieldsValues["id"];
+F.actions.loadUser = F.registerAction((e: Event, props: Readonly<AppProps>) => {
+  const id = props.registeredFieldsValues.id;
   fetch("https://jsonplaceholder.typicode.com/users/" + id)
-    .then(response => response.json())
-    .then(json => {
-      console.log("recieved fetch");
+    .then((response) => response.json())
+    .then((json) => {
+      // console.log("recieved fetch");
       let user;
       if (json && json.length) {
-        user = json[(Math.random() * Number.parseInt(json.length)).toFixed()];
+        user = json[(Math.random() * Number.parseInt(json.length, 10)).toFixed()];
       } else {
         user = json;
       }
-      props.username = user.username;
-      F.render(props);
+      F.render({...props, username: user.username});
     });
   return props;
-})
+});
 
 registerRoutes(F);
 
 F.registerView(renderRootView);
 F.mountTo("mainapp");
-

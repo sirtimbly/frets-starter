@@ -1,20 +1,20 @@
-var postcss = require('postcss')
+// var postcss = require('postcss')
+const postcssPresetEnv = require('postcss-preset-env');
+const cssnano = require("cssnano");
+var atImport = require("postcss-import")
 
 module.exports = {
   // parser: file.extname === '.sss' ? 'sugarss' : false,
-  plugins: {
-    'postcss-import': {},
-    'postcss-fontpath': {},
-    'postcss-custom-media': {},
-    'postcss-custom-properties': {},
-    'postcss-calc': {},
-    'postcss-color-function': {},
-    'postcss-discard-comments': {},
-    'autoprefixer': {},
-    'cssnano': {
-      preset: 'default',
-  }
-  },
+  plugins: [
+    atImport(),
+    postcssPresetEnv({
+      stage: 1,
+      browsers: 'last 2 versions'
+    }),
+    // cssnano({
+    //   preset: 'default',
+    // })
+  ],
   input: 'src/base.css',
   dir: 'dist'
 }

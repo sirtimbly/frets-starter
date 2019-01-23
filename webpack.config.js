@@ -1,9 +1,9 @@
 const path = require('path');
 let webpack = require("webpack");
 let HtmlWebpackPlugin = require('html-webpack-plugin');
-let ExtractTextPlugin = require('extract-text-webpack-plugin')
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// let ExtractTextPlugin = require('extract-text-webpack-plugin')
+// var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+// var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 var MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
 const production = process.env.NODE_ENV === "production";
@@ -12,7 +12,7 @@ module.exports = (env = {}) => {
 
 return {
     entry: "./src/app.ts",
-
+    mode: "development",
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, 'dist')
@@ -21,12 +21,12 @@ return {
         contentBase: __dirname + '/dist/',
         historyApiFallback: true,
         port: 8080,
-        proxy: {
-            '/.netlify/functions/*': {
-                target: 'http://localhost:9000',
-                pathRewrite: {"^/.netlify/functions": ""}
-            }
-        },
+        // proxy: {
+        //     '/.netlify/functions/*': {
+        //         target: 'http://localhost:9000',
+        //         pathRewrite: {"^/.netlify/functions": ""}
+        //     }
+        // },
         hot: true
     },
     // context: __dirname,
@@ -50,7 +50,7 @@ return {
     module: {
 
         rules: [
-            { test: /\.tsx?$/, loader: "babel-loader!ts-loader" }
+            { test: /\.tsx?$/, loader: "ts-loader" }
         ].concat((() => {
                 if (production) {
                     console.log("I'm ignore css because it's prod")

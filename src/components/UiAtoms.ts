@@ -1,8 +1,8 @@
 import { IFretsProps } from "frets";
 import { VNode, VNodeProperties } from "maquette";
+import { SampleActions } from "../actions/SampleActions";
 import { $, $$ } from "../base-styles";
 import { SampleScreens } from "../models/AppProps";
-import { SampleActions } from "../actions/SampleActions";
 
 export const icon = (name: string): VNode => {
   return $$("span.icon-" + name).h([""]);
@@ -10,11 +10,11 @@ export const icon = (name: string): VNode => {
 
 export const Icons = {
   check: (): VNode => icon("ok"),
+  minus: (): VNode => icon("minus"),
   ok: (): VNode => icon("ok"),
+  plus: (): VNode => icon("plus"),
   refresh: (): VNode => icon("arrows-cw"),
   thumbsUp: (): VNode => icon("thumbs-up"),
-  minus: (): VNode => icon("minus"),
-  plus: (): VNode => icon("plus"),
 };
 
 /**
@@ -62,3 +62,5 @@ export const Menu = (props: IFretsProps<SampleScreens>,
   });
   return $$("nav").mb1.mr2.h(nodes);
 };
+
+export const $grid = $$("div.clearfix");

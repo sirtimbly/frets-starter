@@ -1,14 +1,14 @@
 
     import * as Maquette from "maquette";
-    
-    export class BaseStyles {
+
+    export default class BaseStyles {
         public chain: string[];
         public conditions: boolean[] = [];
         public classProps: any = {};
         private writeConditionIndex: number = 0;
         private readConditionIndex: number = 0;
         private classObjectMode: boolean = false;
-    
+
         constructor(selector: string) {
             this.chain = new Array<string>();
             if (selector.length > 0) {
@@ -16,33 +16,36 @@
             }
             return this;
         }
-    
+
         public when = (condition: boolean): BaseStyles => {
             this.classObjectMode = true;
             this.conditions[this.writeConditionIndex] = condition;
             return this;
         }
-    
+
         public andWhen = (condition: boolean): BaseStyles => {
             this.classObjectMode = true;
             this.writeConditionIndex++;
             this.readConditionIndex++;
             return this.when(condition);
-    
+
         }
-    
+
         public otherwise = (): BaseStyles => {
             this.classObjectMode = true;
             return this.andWhen( !this.conditions[this.readConditionIndex]);
         }
-    
-        public h = (properties?: Maquette.VNodeProperties, ...children: Maquette.VNodeChild[]): Maquette.VNode => {
+
+        public h = (properties?: Maquette.VNodeProperties, children?: (string | Maquette.VNode | Maquette.VNodeChild)[]): Maquette.VNode => {
             if (this.classObjectMode) {
                 throw Error("You can't build a vnode when you are using this for building a classes object");
             }
+            if (properties && typeof properties === "object" && properties.length > 0) {
+                return Maquette.h(this.toString(), properties);
+            }
             return Maquette.h(this.toString(), properties, children);
         }
-    
+
         public toObj = () => {
             if (!this.classObjectMode) {
                 // tslint:disable-next-line:max-line-length
@@ -50,26 +53,40 @@
             }
             return this.classProps;
         }
-    
+
         get div(): BaseStyles { return new BaseStyles("div"); }
+        get img(): BaseStyles { return new BaseStyles("img"); }
+        get a(): BaseStyles { return new BaseStyles("a"); }
+        get p(): BaseStyles { return new BaseStyles("p"); }
+        get ul(): BaseStyles { return new BaseStyles("ul"); }
+        get ol(): BaseStyles { return new BaseStyles("ol"); }
+        get li(): BaseStyles { return new BaseStyles("li"); }
+        get section(): BaseStyles { return new BaseStyles("section"); }
+        get header(): BaseStyles { return new BaseStyles("header"); }
+        get article(): BaseStyles { return new BaseStyles("article"); }
+        get nav(): BaseStyles { return new BaseStyles("nav"); }
+        get aside(): BaseStyles { return new BaseStyles("aside"); }
         get span(): BaseStyles { return new BaseStyles("span"); }
-        get button(): BaseStyles { return new BaseStyles("button.btn"); }
-        get input(): BaseStyles { return new BaseStyles("input.input"); }
-        get label(): BaseStyles { return new BaseStyles("label.label"); }
-        get select(): BaseStyles { return new BaseStyles("select.select"); }
-        get textarea(): BaseStyles { return new BaseStyles("textarea.textarea"); }
-    
+        get button(): BaseStyles { return new BaseStyles("button"); }
+        get input(): BaseStyles { return new BaseStyles("input"); }
+        get label(): BaseStyles { return new BaseStyles("label"); }
+        get select(): BaseStyles { return new BaseStyles("select"); }
+        get textarea(): BaseStyles { return new BaseStyles("textarea"); }
+
         public toString = (): string => {
             if (this.classObjectMode) {
                 throw Error("You can't build a selector string when you are calling conditional methods");
             }
+            if (this.chain.length === 1) {
+                return this.chain[0] || "div";
+            }
             return this.chain.join(".");
         }
-    
+
         public $ = (className: string): BaseStyles => {
             return this.add(className);
         }
-    
+
         public add = (className: string): BaseStyles => {
             if (this.classObjectMode) {
                 this.classProps[className] = this.conditions[this.readConditionIndex];
@@ -79,7 +96,9 @@
             return this;
         }
 
-        get h1() { return this.add("h1"); }
+        get h00() { return this.add("h00"); }
+get h0() { return this.add("h0"); }
+get h1() { return this.add("h1"); }
 get h2() { return this.add("h2"); }
 get h3() { return this.add("h3"); }
 get h4() { return this.add("h4"); }
@@ -126,87 +145,6 @@ get alignBaseline() { return this.add("align-baseline"); }
 get alignTop() { return this.add("align-top"); }
 get alignMiddle() { return this.add("align-middle"); }
 get alignBottom() { return this.add("align-bottom"); }
-get m0() { return this.add("m0"); }
-get mt0() { return this.add("mt0"); }
-get mr0() { return this.add("mr0"); }
-get mb0() { return this.add("mb0"); }
-get ml0() { return this.add("ml0"); }
-get mx0() { return this.add("mx0"); }
-get my0() { return this.add("my0"); }
-get m1() { return this.add("m1"); }
-get mt1() { return this.add("mt1"); }
-get mr1() { return this.add("mr1"); }
-get mb1() { return this.add("mb1"); }
-get ml1() { return this.add("ml1"); }
-get mx1() { return this.add("mx1"); }
-get my1() { return this.add("my1"); }
-get m2() { return this.add("m2"); }
-get mt2() { return this.add("mt2"); }
-get mr2() { return this.add("mr2"); }
-get mb2() { return this.add("mb2"); }
-get ml2() { return this.add("ml2"); }
-get mx2() { return this.add("mx2"); }
-get my2() { return this.add("my2"); }
-get m3() { return this.add("m3"); }
-get mt3() { return this.add("mt3"); }
-get mr3() { return this.add("mr3"); }
-get mb3() { return this.add("mb3"); }
-get ml3() { return this.add("ml3"); }
-get mx3() { return this.add("mx3"); }
-get my3() { return this.add("my3"); }
-get m4() { return this.add("m4"); }
-get mt4() { return this.add("mt4"); }
-get mr4() { return this.add("mr4"); }
-get mb4() { return this.add("mb4"); }
-get ml4() { return this.add("ml4"); }
-get mx4() { return this.add("mx4"); }
-get my4() { return this.add("my4"); }
-get mxn1() { return this.add("mxn1"); }
-get mxn2() { return this.add("mxn2"); }
-get mxn3() { return this.add("mxn3"); }
-get mxn4() { return this.add("mxn4"); }
-get mAuto() { return this.add("m-auto"); }
-get mtAuto() { return this.add("mt-auto"); }
-get mrAuto() { return this.add("mr-auto"); }
-get mbAuto() { return this.add("mb-auto"); }
-get mlAuto() { return this.add("ml-auto"); }
-get mxAuto() { return this.add("mx-auto"); }
-get myAuto() { return this.add("my-auto"); }
-get p0() { return this.add("p0"); }
-get pt0() { return this.add("pt0"); }
-get pr0() { return this.add("pr0"); }
-get pb0() { return this.add("pb0"); }
-get pl0() { return this.add("pl0"); }
-get px0() { return this.add("px0"); }
-get py0() { return this.add("py0"); }
-get p1() { return this.add("p1"); }
-get pt1() { return this.add("pt1"); }
-get pr1() { return this.add("pr1"); }
-get pb1() { return this.add("pb1"); }
-get pl1() { return this.add("pl1"); }
-get py1() { return this.add("py1"); }
-get px1() { return this.add("px1"); }
-get p2() { return this.add("p2"); }
-get pt2() { return this.add("pt2"); }
-get pr2() { return this.add("pr2"); }
-get pb2() { return this.add("pb2"); }
-get pl2() { return this.add("pl2"); }
-get py2() { return this.add("py2"); }
-get px2() { return this.add("px2"); }
-get p3() { return this.add("p3"); }
-get pt3() { return this.add("pt3"); }
-get pr3() { return this.add("pr3"); }
-get pb3() { return this.add("pb3"); }
-get pl3() { return this.add("pl3"); }
-get py3() { return this.add("py3"); }
-get px3() { return this.add("px3"); }
-get p4() { return this.add("p4"); }
-get pt4() { return this.add("pt4"); }
-get pr4() { return this.add("pr4"); }
-get pb4() { return this.add("pb4"); }
-get pl4() { return this.add("pl4"); }
-get py4() { return this.add("py4"); }
-get px4() { return this.add("px4"); }
 get col() { return this.add("col"); }
 get colRight() { return this.add("col-right"); }
 get col_1() { return this.add("col-1"); }
@@ -618,13 +556,91 @@ get borderRed() { return this.add("border-red"); }
 get borderFuchsia() { return this.add("border-fuchsia"); }
 get borderPurple() { return this.add("border-purple"); }
 get borderMaroon() { return this.add("border-maroon"); }
-get selectInput() { return this.add("select, .input"); }
+get m0() { return this.add("m0"); }
+get mt0() { return this.add("mt0"); }
+get mr0() { return this.add("mr0"); }
+get mb0() { return this.add("mb0"); }
+get ml0() { return this.add("ml0"); }
+get mx0() { return this.add("mx0"); }
+get my0() { return this.add("my0"); }
+get m1() { return this.add("m1"); }
+get mt1() { return this.add("mt1"); }
+get mr1() { return this.add("mr1"); }
+get mb1() { return this.add("mb1"); }
+get ml1() { return this.add("ml1"); }
+get mx1() { return this.add("mx1"); }
+get my1() { return this.add("my1"); }
+get m2() { return this.add("m2"); }
+get mt2() { return this.add("mt2"); }
+get mr2() { return this.add("mr2"); }
+get mb2() { return this.add("mb2"); }
+get ml2() { return this.add("ml2"); }
+get mx2() { return this.add("mx2"); }
+get my2() { return this.add("my2"); }
+get m3() { return this.add("m3"); }
+get mt3() { return this.add("mt3"); }
+get mr3() { return this.add("mr3"); }
+get mb3() { return this.add("mb3"); }
+get ml3() { return this.add("ml3"); }
+get mx3() { return this.add("mx3"); }
+get my3() { return this.add("my3"); }
+get m4() { return this.add("m4"); }
+get mt4() { return this.add("mt4"); }
+get mr4() { return this.add("mr4"); }
+get mb4() { return this.add("mb4"); }
+get ml4() { return this.add("ml4"); }
+get mx4() { return this.add("mx4"); }
+get my4() { return this.add("my4"); }
+get mxn1() { return this.add("mxn1"); }
+get mxn2() { return this.add("mxn2"); }
+get mxn3() { return this.add("mxn3"); }
+get mxn4() { return this.add("mxn4"); }
+get mAuto() { return this.add("m-auto"); }
+get mtAuto() { return this.add("mt-auto"); }
+get mrAuto() { return this.add("mr-auto"); }
+get mbAuto() { return this.add("mb-auto"); }
+get mlAuto() { return this.add("ml-auto"); }
+get mxAuto() { return this.add("mx-auto"); }
+get myAuto() { return this.add("my-auto"); }
+get p0() { return this.add("p0"); }
+get pt0() { return this.add("pt0"); }
+get pr0() { return this.add("pr0"); }
+get pb0() { return this.add("pb0"); }
+get pl0() { return this.add("pl0"); }
+get px0() { return this.add("px0"); }
+get py0() { return this.add("py0"); }
+get p1() { return this.add("p1"); }
+get pt1() { return this.add("pt1"); }
+get pr1() { return this.add("pr1"); }
+get pb1() { return this.add("pb1"); }
+get pl1() { return this.add("pl1"); }
+get py1() { return this.add("py1"); }
+get px1() { return this.add("px1"); }
+get p2() { return this.add("p2"); }
+get pt2() { return this.add("pt2"); }
+get pr2() { return this.add("pr2"); }
+get pb2() { return this.add("pb2"); }
+get pl2() { return this.add("pl2"); }
+get py2() { return this.add("py2"); }
+get px2() { return this.add("px2"); }
+get p3() { return this.add("p3"); }
+get pt3() { return this.add("pt3"); }
+get pr3() { return this.add("pr3"); }
+get pb3() { return this.add("pb3"); }
+get pl3() { return this.add("pl3"); }
+get py3() { return this.add("py3"); }
+get px3() { return this.add("px3"); }
+get p4() { return this.add("p4"); }
+get pt4() { return this.add("pt4"); }
+get pr4() { return this.add("pr4"); }
+get pb4() { return this.add("pb4"); }
+get pl4() { return this.add("pl4"); }
+get py4() { return this.add("py4"); }
+get px4() { return this.add("px4"); }
+get Select() { return this.add("select"); }
+get Input() { return this.add("input"); }
 get radioLg() { return this.add("radio-lg"); }
 get weightInput() { return this.add("weight-input"); }
-get slideDown() { return this.add("slideDown"); }
-get slideDownSlideDownActive() { return this.add("slideDown.slideDown-active"); }
-get swingBottomBck() { return this.add("swing-bottom-bck"); }
-get swingBottomBckSwingBottomBckActive() { return this.add("swing-bottom-bck.swing-bottom-bck-active"); }
 get textTransformNone() { return this.add("text-transform-none"); }
 get viewLoaderH4() { return this.add("view-loader h4"); }
 get usamap() { return this.add("usamap"); }
