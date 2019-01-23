@@ -19,6 +19,11 @@ F.validator = (newProps: Readonly<AppProps>, oldProps: AppProps): [AppProps, boo
     isValid = false;
     messages.push("Can't set counter to less than 0.");
   }
+
+  if (newProps.counter > 4) {
+    isValid = false;
+    messages.push("Can't set counter to more than 4.");
+  }
   // reject all changes by default, but merge in new validation messages
   if (isValid) {
     result = Object.assign({}, newProps);
@@ -43,6 +48,7 @@ F.actions.decrement = F.registerAction((e: Event, props: Readonly<AppProps>): Ap
 
 F.actions.loadUser = F.registerAction((e: Event, props: Readonly<AppProps>) => {
   const id = props.registeredFieldsValues.id;
+
   fetch("https://jsonplaceholder.typicode.com/users/" + id)
     .then((response) => response.json())
     .then((json) => {
@@ -53,9 +59,9 @@ F.actions.loadUser = F.registerAction((e: Event, props: Readonly<AppProps>) => {
       } else {
         user = json;
       }
-      F.render({...props, username: user.username});
+      F.render({...props, username: user.username, isLoading: false});
     });
-  return props;
+  return {...props, isLoading: true};
 });
 
 registerRoutes(F);

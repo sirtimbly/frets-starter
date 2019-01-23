@@ -7,7 +7,11 @@ import { SampleActions } from "../actions/SampleActions";
 
 import { IRegisteredField } from "frets/build/main/Frets";
 import AppProps, { SampleScreens } from "../models/AppProps";
-import { HPanel, Icons, Menu, Panel, $grid } from "./UiAtoms";
+import { $grid } from "./UiAtoms";
+import { alert } from "./Notifications";
+import { Menu } from "./Menu";
+import { VPanel, HPanel, Panel } from "./Panels";
+import { Icons } from "./Icons";
 
 export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
   const { modelProps: props, actions } = app;
@@ -17,13 +21,10 @@ export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
       $.div.h(["My FRETS App"]),
     ]),
     props.messages.length
-      ? $.div.h5.bgOrange.block.p2.white.Bold.h(
-          props.messages.map((s: string) => $.div.h({key: s}, [s])),
-        )
-      : "",
+      ? alert(props.messages) : "",
     $grid.h([
-      $.div.col.col_3.smCol.smCol_12.pt2.h([Menu(props, false, actions)]),
-      $.div.col.col_9.smCol.smCol_12.px2.h([
+      $.div.col.col_2.smCol.smCol_12.pt2.h([Menu(props, false, actions)]),
+      $.div.col.col_10.smCol.smCol_12.px2.h([
         (props.activeScreen === SampleScreens.Home)
           ? renderHome(props, actions, idField)
           : renderAbout(props, actions),
@@ -34,14 +35,13 @@ export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
 
 const renderHome = (props: AppProps, actions: SampleActions, idField: IRegisteredField<string>) => {
 
-  return Panel(null, null,
+  return VPanel("Example Frontend Application", {},
     $.div.leftAlign.pb2.h([
-      $.h2.h(["Example Frontend Application"]),
       $.p.p1.bgSilver.blue.h([
-        Icons​​.check(),
+        Icons​​.thumbsUp(),
         "Demonstrates dynamic calculation, routing, async data, and validation."]),
     ]),
-    HPanel({ key: "incrementer" },
+    HPanel("Simple Incrementer with Validation", { key: "incrementer" },
       $.button.btn.btnOutline.h(
         {
           onclick: actions.decrement,
@@ -55,23 +55,46 @@ const renderHome = (props: AppProps, actions: SampleActions, idField: IRegistere
         ["+"],
       ),
       $.div.bgLightGray.rounded.p1.mx1.h2.h([props.counter.toFixed() + " hours"]),
-      $.div.h([$.div.bgLightBlue.rounded.mx1.p1.h2.h([props.timeCounter])]),
+      $.div.h([$.div.lightBlue.rounded.mx1.p1.h2.h([props.timeCounter])]),
     ),
-    HPanel({ key: "fakeData"},
-      $.label.m1.h(["UserId",
-        $.input.h({
-          onblur: idField.handler,
-          value: idField.value,
-        }),
+    HPanel("Async Fetching", { key: "fakeData"},
+      $.label.m1.h([
+        $.label.gray.h([
+          "Placeholder API ",
+          $.a.btn.btnCircle.littleCircle.h({
+            href:  "https://jsonplaceholder.typicode.com/",
+            title: "https://jsonplaceholder.typicode.com/users/",
+          }, ["?"]),
+          $.input.maxWidth_1.h({
+            onblur: idField.handler,
+            type: "text",
+            value: idField.value,
+          }),
+        ]),
       ]),
-      $.button.btn.btnOutline.rounded.p1.m1.h({ onclick: actions.loadUser}, ["Fetch API Data"]),
-      $.div.bgLightGray.rounded.p1.m1.h(["Username: " + props.username]),
+      $.button.btn.btnPrimary.btnOutline.rounded.p1.m1.h({
+        classes: $$().when(props.isLoading).bgGray.white.toObj(),
+        disabled: props.isLoading,
+        onclick: actions.loadUser,
+      },
+      [
+          props.isLoading ? Icons.refresh() : Icons.ok(),
+          "Fetch API Data",
+      ]),
+    ),
+    VPanel("Data Results", {},
+      $.div.rounded.p1.m1.h({
+        class: !!props.username ? "green" : "gray",
+      }, [
+        "API Response Username",
+        props.username ? Icons.ok() : " - Not Loaded",
+        " " + props.username,
+      ]),
     ),
   );
 };
 
-const renderAbout = (props: AppProps, actions: SampleActions) => Panel(null, null,
-    $$("h2").h(["About FRETS"]),
+const renderAbout = (props: AppProps, actions: SampleActions) => VPanel("About FRETS", {},
     $$("p").gray.borderTop.pt2.h([`See the documentation online at`]),
     $$("a").h({
       href: "https://github.com/sirtimbly/frets",
