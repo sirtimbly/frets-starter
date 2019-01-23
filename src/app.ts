@@ -12,18 +12,22 @@ const startingActions = new SampleActions();
 const F = new FRETS<AppProps, SampleActions>(startingCondition, startingActions);
 
 F.validator = (newProps: Readonly<AppProps>, oldProps: AppProps): [AppProps, boolean] => {
+  // debugger;
   const messages: string[] = [];
+  if (newProps.networkError) {
+    messages.push(newProps.networkError);
+  }
   let result;
   let isValid = true;
   if (newProps.counter < 0) {
     isValid = false;
     messages.push("Can't set counter to less than 0.");
   }
-
   if (newProps.counter > 4) {
     isValid = false;
     messages.push("Can't set counter to more than 4.");
   }
+
   // reject all changes by default, but merge in new validation messages
   if (isValid) {
     result = Object.assign({}, newProps);
@@ -50,7 +54,13 @@ F.actions.loadUser = F.registerAction((e: Event, props: Readonly<AppProps>) => {
   const id = props.registeredFieldsValues.id;
 
   fetch("https://jsonplaceholder.typicode.com/users/" + id)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        // console.log(response);
+        throw new Error(`Unable to load data from api (${response.status}).`);
+      }
+      return response.json();
+    })
     .then((json) => {
       // console.log("recieved fetch");
       let user;
@@ -59,7 +69,10 @@ F.actions.loadUser = F.registerAction((e: Event, props: Readonly<AppProps>) => {
       } else {
         user = json;
       }
-      F.render({...props, username: user.username, isLoading: false});
+      F.render({...props, user, isLoading: false, networkError: ""});
+    })
+    .catch((err: Error) => {
+      F.render({...props, isLoading: false, networkError: "Error: " + err.message });
     });
   return {...props, isLoading: true};
 });

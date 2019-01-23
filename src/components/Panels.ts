@@ -9,7 +9,7 @@ export const Panel = (isHoriz?: boolean,
                       title?: string,
                       properties?: VNodeProperties,
                       ...nodes: Array<string | VNode>): VNode => {
-  let node = $.div.panel.bgWhite.shadow.smP1.p3.my2.rounded.leftAlign;
+  let node = $.div.panel.bgWhite.shadow.smP1.p3.my2.rounded.leftAlign.overflowAuto;
   const titleNode = $.div.h2.pb2.h([title || ""]);
   if (isHoriz) {
     if (title && title.length) {

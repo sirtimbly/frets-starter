@@ -672,6 +672,10 @@ get bgLightBlue() { return this.add("bg-light-blue"); }
 get lightBlue() { return this.add("light-blue"); }
 get borderLightBlue() { return this.add("border-light-blue"); }
 get bgGlass() { return this.add("bg-glass"); }
+get bgGray_400() { return this.add("bg-gray-400"); }
+get bgGray_500() { return this.add("bg-gray-500"); }
+get bgGray_600() { return this.add("bg-gray-600"); }
+get collapse() { return this.add("collapse"); }
 
 }
 
