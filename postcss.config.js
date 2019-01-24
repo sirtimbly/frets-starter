@@ -1,7 +1,10 @@
 // var postcss = require('postcss')
-const postcssPresetEnv = require('postcss-preset-env');
 const cssnano = require("cssnano");
-var atImport = require("postcss-import")
+const postcssPresetEnv = require('postcss-preset-env');
+var atImport = require("postcss-import");
+var purgecss = require("@fullhuman/postcss-purgecss");
+
+var purgeFromFrets = require("purgecss-from-frets");
 
 module.exports = {
   // parser: file.extname === '.sss' ? 'sugarss' : false,
@@ -11,6 +14,15 @@ module.exports = {
       stage: 1,
       browsers: 'last 2 versions'
     }),
+    purgecss({
+      content: ['./src/components/**/*.ts'],
+      extractors: [
+        { extractor: purgeFromFrets, extensions: ["ts"] }
+      ],
+      whitelist: ['html', 'body', 'input', 'button', 'select'],
+      whitelistPatterns: [/icon/, /green/],
+      rejected: true
+    })
     // cssnano({
     //   preset: 'default',
     // })

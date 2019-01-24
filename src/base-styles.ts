@@ -637,10 +637,6 @@ get borderRed() { return this.add("border-red"); }
 get borderFuchsia() { return this.add("border-fuchsia"); }
 get borderPurple() { return this.add("border-purple"); }
 get borderMaroon() { return this.add("border-maroon"); }
-get Select() { return this.add("select"); }
-get Input() { return this.add("input"); }
-get radioLg() { return this.add("radio-lg"); }
-get weightInput() { return this.add("weight-input"); }
 get textTransformNone() { return this.add("text-transform-none"); }
 get drinkForm() { return this.add("drink-form"); }
 get panel() { return this.add("panel"); }
@@ -672,9 +668,9 @@ get bgLightBlue() { return this.add("bg-light-blue"); }
 get lightBlue() { return this.add("light-blue"); }
 get borderLightBlue() { return this.add("border-light-blue"); }
 get bgGlass() { return this.add("bg-glass"); }
-get bgGray_400() { return this.add("bg-gray-400"); }
-get bgGray_500() { return this.add("bg-gray-500"); }
-get bgGray_600() { return this.add("bg-gray-600"); }
+get bgGray400() { return this.add("bg-gray400"); }
+get bgGray500() { return this.add("bg-gray500"); }
+get bgGray600() { return this.add("bg-gray600"); }
 get collapse() { return this.add("collapse"); }
 
 }

@@ -12,7 +12,7 @@ export interface IColumn {
  */
 export const Table = (columns: IColumn[], data: any[] ): VNode => {
   const row = $$("tr");
-  const cell = $$("td").borderBottom.borderRight.borderSilver.bgGray_600.p1;
+  const cell = $$("td").borderBottom.borderRight.borderSilver.bgGray600.p1;
   const header = $$("th").borderBottom.borderGray;
   if (!data || data.length <= 0) {
     return $$("table").collapse.h();

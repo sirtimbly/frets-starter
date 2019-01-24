@@ -2,15 +2,15 @@ import { VNode } from "maquette";
 import { $$ } from "../base-styles";
 
 export const icon = (name: string): VNode => {
-  return $$("span.icon-" + name).h([""]);
+  return $$("span." + name).h([""]);
 };
 
 export const Icons = {
-  bell: (): VNode => icon("bell"),
-  check: (): VNode => icon("ok"),
-  minus: (): VNode => icon("minus"),
-  ok: (): VNode => icon("ok"),
-  plus: (): VNode => icon("plus"),
-  refresh: (): VNode => icon("arrows-cw"),
-  thumbsUp: (): VNode => icon("thumbs-up"),
+  bell: (): VNode => icon("icon-bell"),
+  check: (): VNode => icon("icon-ok"),
+  minus: (): VNode => icon("icon-minus"),
+  ok: (): VNode => icon("icon-ok"),
+  plus: (): VNode => icon("icon-plus"),
+  refresh: (): VNode => icon("icon-arrows-cw"),
+  thumbsUp: (): VNode => icon("icon-thumbs-up"),
 };

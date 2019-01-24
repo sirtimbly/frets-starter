@@ -18,7 +18,7 @@ export const renderHome = (props: AppProps, actions: SampleActions, idField: IRe
   return VPanel("Example Frontend Application", {},
     $.div.leftAlign.pb2.h([
       $.p.p1.bgSilver.blue.h([
-        Icons​​.thumbsUp(),
+        Icons.thumbsUp(),
         "Demonstrates dynamic calculation, routing, async data, and validation."]),
     ]),
     HPanel("Simple Incrementer with Validation", { key: "incrementer" },
