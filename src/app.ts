@@ -3,8 +3,13 @@ import { FRETS } from "frets";
 import * as moment from "moment";
 import { SampleActions } from "./actions/SampleActions";
 import { renderRootView } from "./components/UiRoot";
-import AppProps, { SampleScreens } from "./models/AppProps";
-import { registerRoutes } from "./navigation";
+import AppProps from "./models/AppProps";
+import { registerRoutes, SampleScreens } from "./navigation";
+
+import { addPlugin } from "just-animate";
+
+import { waapiPlugin } from "just-animate/lib/web";
+addPlugin(waapiPlugin);
 
 const startingCondition: AppProps = new AppProps();
 const startingActions = new SampleActions();
@@ -16,11 +21,10 @@ const F: App = new FRETS<AppProps, SampleActions>(startingCondition, startingAct
 F.validator = (newProps: Readonly<AppProps>, oldProps: AppProps): [AppProps, boolean] => {
   // debugger;
   const messages: string[] = [];
-  if (newProps.networkError) {
-    messages.push(newProps.networkError);
-  }
-  let result;
+  const onSamePage: boolean = (newProps.activeScreen === oldProps.activeScreen);
+  let result: AppProps;
   let isValid = true;
+
   if (newProps.counter < 0) {
     isValid = false;
     messages.push("Can't set counter to less than 0.");
@@ -36,7 +40,16 @@ F.validator = (newProps: Readonly<AppProps>, oldProps: AppProps): [AppProps, boo
   } else {
     result = Object.assign({}, oldProps);
   }
-  result.messages = messages;
+
+  // Other error messages that don't invalidate the update
+  if (newProps.networkError) {
+    messages.push(newProps.networkError);
+    result.networkError = null;
+  }
+
+  // clear the alerts if we navigated to a new page
+  result.messages = onSamePage ? messages : [];
+
   return [result,  isValid];
 };
 

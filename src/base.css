@@ -329,7 +329,7 @@ h4,
 }
 
 .fade-in {
-    transition: 200ms ease-out all;
+    transition: 100ms linear all;
     transform: translateY(-16px);
     opacity: 0;
 }

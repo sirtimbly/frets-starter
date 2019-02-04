@@ -1,26 +1,16 @@
 import { $, $$ } from "../base-styles";
 
-import { VNode } from "maquette";
-
-import { FRETS } from "frets";
-import { SampleActions } from "../actions/SampleActions";
-
-import { IRegisteredField } from "frets/build/main/Frets";
-import AppProps, { SampleScreens } from "../models/AppProps";
-import { $grid } from "./UiAtoms";
-
 import { Icons } from "./Icons";
 import { HPanel, Panel, VPanel } from "./Panels";
 import { Table } from "./Tables";
 
-import { addPlugin, animate, sequence, timeline } from "just-animate";
+import { sequence } from "just-animate";
 
-import { waapiPlugin } from "just-animate/lib/web";
 import * as moment from "moment";
+import { App } from "../app";
 
 type animationFn = (domNode: Element, properties: any) => void;
 
-addPlugin(waapiPlugin);
 
 const getAnimateCounter = (oldValue: string, newValue: string, up: boolean): animationFn => {
   const destination: number = up ? -20 : 20;
@@ -65,7 +55,8 @@ const getAnimateCounter = (oldValue: string, newValue: string, up: boolean): ani
 
 
 
-export const renderHome = (props: AppProps, actions: SampleActions, idField: IRegisteredField<string>) => {
+export const renderHome = (app: App) => {
+  const {modelProps: props, actions} = app;
 
   return VPanel("Example Frontend Application", {},
     $.div.leftAlign.pb2.h([
@@ -90,52 +81,6 @@ export const renderHome = (props: AppProps, actions: SampleActions, idField: IRe
       $.div.h([$.div.lightBlue.rounded.mx1.p1.h2.h({
         updateAnimation: getAnimateCounter(props.previousTime, props.timeCounter, props.counterIncreased),
       }, [props.timeCounter])]),
-    ),
-    HPanel("Async Fetching", { key: "fakeData"},
-      $.label.m1.h([
-        "Placeholder API User Id",
-        $.a.btn.littleCircle.h({
-          href:  "https://jsonplaceholder.typicode.com/",
-          title: "https://jsonplaceholder.typicode.com/users/",
-        }, ["?"]),
-        $.input.maxWidth_1.h({
-          onblur: idField.handler,
-          onchange: idField.handler,
-          onkeyup: (e: KeyboardEvent) => {
-            if (e.key === "Enter") {
-              (e.target as HTMLInputElement).parentElement.nextElementSibling.dispatchEvent(new Event("click"));
-            }
-          },
-          type: "text",
-          value: idField.value,
-        }),
-      ]),
-      $.button.btn.btnPrimary.btnOutline.rounded.p1.m1.h({
-        classes: $$().when(props.isLoading).bgGray.white.toObj(),
-        disabled: props.isLoading,
-        onclick: actions.loadUser,
-      },
-      [
-          props.isLoading ? Icons.refresh() : Icons.ok(),
-          "Fetch API Data",
-      ]),
-    ),
-    VPanel("Data Results", {},
-      $.div.rounded.p1.m1.h({
-        class: !!props.user ? "green" : "gray",
-      }, [
-        "API Response",
-        props.user ? Icons.ok() : " - Not Loaded",
-      ]),
-      props.user ?
-      Table([
-        { label: "Name", prop: "name"},
-        { label: "Username", prop: "username"},
-        { label: "E-Mail", prop: "email"},
-        { label: "Id", prop: "id"},
-        { label: "Phone", prop: "phone"},
-        { label: "Website", prop: "website"},
-      ], props.users) : "",
     ),
   );
 };

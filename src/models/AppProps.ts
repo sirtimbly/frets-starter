@@ -1,4 +1,6 @@
 import { IFretsProps, PropsWithFields } from "frets";
+import { SampleActions } from "../actions/SampleActions";
+import { RouteKeys, IRouteKeys, SampleScreens } from "../navigation";
 export interface IUser {
   id?: string;
   name?: string;
@@ -11,8 +13,7 @@ export interface IUser {
 }
 
 export default class AppProps extends PropsWithFields {
-  public screens: SampleScreens[] = [SampleScreens.Home,
-                                     SampleScreens.About];
+  public screens: SampleScreens[];
   public messages: string[] = [];
   public isLoading: boolean;
   public isAuthenticated: boolean;
@@ -28,7 +29,7 @@ export default class AppProps extends PropsWithFields {
   public showForm: boolean;
   public showTable: boolean;
 
-  constructor(public activeScreen: SampleScreens = SampleScreens.Home) {
+  constructor(public activeScreen: SampleScreens = "Home") {
     super();
   }
 
@@ -38,7 +39,3 @@ export default class AppProps extends PropsWithFields {
 
 }
 
-export enum SampleScreens {
-  Home,
-  About,
-}

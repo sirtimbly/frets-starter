@@ -1,19 +1,19 @@
-import { ActionsWithFields } from "frets";
-import { SampleScreens } from '../models/AppProps';
+import { ActionsWithFields, IFretsProps } from "frets";
+import { IRouteKeys, SampleScreens } from "../navigation";
+
+type navAction = (e: Event) => boolean;
 
 export class SampleActions extends ActionsWithFields {
 
-  public navHome: (e: Event) => boolean;
-  public navAbout: (e: Event) => boolean;
-  public increment: (e: Event) => boolean;
-  public decrement: (e: Event) => boolean;
-  public loadUser: (e: Event) => boolean;
+  public navHome: navAction;
+  public navAbout: navAction;
+  public navUsers: navAction;
+  public increment: navAction;
+  public decrement: navAction;
+  public loadUser: navAction;
 
-  public activeScreen: SampleScreens = SampleScreens.Home;
+  public screenActions: navAction[] = [];
 
-  public screenActions = {
-    0: this.navHome,
-    1: this.navAbout,
-  };
+  public nav: {[key in SampleScreens]?: navAction} = {};
 
 }
