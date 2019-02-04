@@ -18,7 +18,7 @@ import { renderUsers } from "./Users";
 export const renderRootView = (app: App ): VNode => {
   const { modelProps: props, actions } = app;
   let component: (app: App) => VNode;
-  switch (props.activeScreen) {
+  switch (app.getRouteLink(props.activeScreen)) {
     case RouteKeys.Home:
       component = renderHome;
       break;

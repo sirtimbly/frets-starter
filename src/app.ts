@@ -7,7 +7,7 @@ import format from "date-fns/esm/format";
 import { SampleActions } from "./actions/SampleActions";
 import { renderRootView } from "./components/UiRoot";
 import AppProps from "./models/AppProps";
-import { registerRoutes, SampleScreens } from "./navigation";
+import { applyRoutesToAppInstance, SampleScreens } from "./navigation";
 
 import * as just from "just-animate";
 
@@ -70,8 +70,8 @@ F.calculator = (props: Readonly<AppProps>, oldProps: AppProps): AppProps => {
     ...props,
     registeredFieldsValues: vals,
     counterIncreased: !!(oldProps.counter < props.counter),
-    previousTime: format(addHours(new Date(), oldProps.counter), "ddd h a"),
-    timeCounter: format(addHours(new Date(), props.counter), "ddd h a"),
+    previousTime: format(addHours(new Date(), oldProps.counter), "EEE h a"),
+    timeCounter: format(addHours(new Date(), props.counter), "EEE h a"),
    };
 };
 
@@ -112,7 +112,7 @@ F.actions.loadUser = F.registerAction((e: Event, props: Readonly<AppProps>) => {
   return {...props, isLoading: true};
 });
 
-registerRoutes(F);
+applyRoutesToAppInstance(F);
 
 F.registerView(renderRootView);
 F.mountTo("mainapp");
