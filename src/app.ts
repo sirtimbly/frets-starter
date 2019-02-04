@@ -1,6 +1,9 @@
 
 import { FRETS } from "frets";
-import * as moment from "moment";
+
+import addHours from "date-fns/esm/addHours";
+import format from "date-fns/esm/format";
+
 import { SampleActions } from "./actions/SampleActions";
 import { renderRootView } from "./components/UiRoot";
 import AppProps from "./models/AppProps";
@@ -9,6 +12,7 @@ import { registerRoutes, SampleScreens } from "./navigation";
 import * as just from "just-animate";
 
 import { waapiPlugin } from "just-animate/lib.es2015/web";
+import { IUser } from "./models/AppProps";
 just.addPlugin(waapiPlugin);
 
 const startingCondition: AppProps = new AppProps();
@@ -66,8 +70,8 @@ F.calculator = (props: Readonly<AppProps>, oldProps: AppProps): AppProps => {
     ...props,
     registeredFieldsValues: vals,
     counterIncreased: !!(oldProps.counter < props.counter),
-    previousTime: moment().add(oldProps.counter, "hours").format("ddd h a"),
-    timeCounter: moment().add(props.counter, "hours").format("ddd h a"),
+    previousTime: format(addHours(new Date(), oldProps.counter), "ddd h a"),
+    timeCounter: format(addHours(new Date(), props.counter), "ddd h a"),
    };
 };
 
@@ -85,25 +89,22 @@ F.actions.loadUser = F.registerAction((e: Event, props: Readonly<AppProps>) => {
   fetch("https://jsonplaceholder.typicode.com/users/" + id)
     .then((response) => {
       if (!response.ok) {
-        // console.log(response);
         throw new Error(`Unable to load data from api (${response.status}).`);
       }
       return response.json();
     })
-    .then((json) => {
-      // console.log("recieved fetch");
-      let user;
-      if (json && json.length) {
-        user = json[(Math.random() * Number.parseInt(json.length, 10)).toFixed()];
-      } else {
-        user = json;
-      }
+    .then((data) => {
+      const users: IUser[] =
+        (data && data.length)
+          ? data
+          : [... props.users, data];
       F.render({
         ...props,
-        user,
-        users: [...props.users, user],
+        user: users[users.length - 1],
+        users,
         isLoading: false,
-        networkError: ""});
+        networkError: "",
+      });
     })
     .catch((err: Error) => {
       F.render({...props, isLoading: false, networkError: "Error: " + err.message });

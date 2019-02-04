@@ -6,7 +6,6 @@ import { Table } from "./Tables";
 
 import * as just from "just-animate";
 
-import * as moment from "moment";
 import { App } from "../app";
 
 type animationFn = (domNode: Element, properties: any) => void;

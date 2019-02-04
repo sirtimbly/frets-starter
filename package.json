@@ -58,6 +58,7 @@
     "@fullhuman/postcss-purgecss": "^1.1.0",
     "@types/change-case": "^2.3.1",
     "@types/cssnano": "^4.0.0",
+    "@types/date-fns": "^2.6.0",
     "@types/html-webpack-plugin": "^3.2.0",
     "@types/webpack": "^4.4.24",
     "@types/webpack-bundle-analyzer": "^2.13.0",
@@ -85,12 +86,11 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "@types/date-fns": "^2.6.0",
     "axios": "^0.18.0",
     "basscss": "^8.0.10",
     "basscss-addons": "^1.0.0",
     "basscss-basic": "^1.0.0",
-    "date-fns": "^1.30.1",
+    "date-fns": "^2.0.0-alpha.27",
     "frets": "^0.5.1",
     "just-animate": "^2.5.1",
     "maquette": "^3.3.3",

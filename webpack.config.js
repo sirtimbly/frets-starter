@@ -137,11 +137,11 @@ return {
                     //     name: 'manifest',
                     //     chunks: ['vendor']
                     //   }),
-                    new BundleAnalyzerPlugin(),
+                    // new BundleAnalyzerPlugin(),
                 ]
             } else {
                 return [
-                    new BundleAnalyzerPlugin(),
+                    // new BundleAnalyzerPlugin(),
                     new webpack.HotModuleReplacementPlugin(),
                     new HtmlWebpackPlugin({
                         filename: 'index.html',
