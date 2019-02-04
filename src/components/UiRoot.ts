@@ -1,6 +1,6 @@
 import { $, $$ } from "../base-styles";
 
-import { VNode } from "maquette";
+import { VNode } from "frets";
 
 import { FRETS } from "frets";
 import { SampleActions } from "../actions/SampleActions";

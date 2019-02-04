@@ -4,7 +4,7 @@ import { Icons } from "./Icons";
 import { HPanel, Panel, VPanel } from "./Panels";
 import { Table } from "./Tables";
 
-import { sequence } from "just-animate";
+import * as just from "just-animate";
 
 import * as moment from "moment";
 import { App } from "../app";
@@ -19,7 +19,7 @@ const getAnimateCounter = (oldValue: string, newValue: string, up: boolean): ani
   return (domNode: Element, properties: any) => {
     // console.log("animate the counter");
     // debugger;
-    sequence([{
+    just.sequence([{
       targets: domNode,
       duration: 256,
       web: {

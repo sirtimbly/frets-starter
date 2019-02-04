@@ -1,9 +1,9 @@
-import { animate } from "just-animate";
+import * as just from "just-animate";
 import { $, $$ } from "../base-styles";
 import { Icons } from "./Icons";
 
 const animateAlertIn = (domNode: Element, properties: any) => {
-  animate({
+  just.animate({
     targets: domNode,
     duration: 412,
     web: {

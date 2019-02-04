@@ -3,7 +3,7 @@ let webpack = require("webpack");
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 // let ExtractTextPlugin = require('extract-text-webpack-plugin')
 // var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-// var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 var MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
 const production = process.env.NODE_ENV === "production";
@@ -137,11 +137,11 @@ return {
                     //     name: 'manifest',
                     //     chunks: ['vendor']
                     //   }),
-                    // new BundleAnalyzerPlugin(),
+                    new BundleAnalyzerPlugin(),
                 ]
             } else {
                 return [
-                    // new BundleAnalyzerPlugin(),
+                    new BundleAnalyzerPlugin(),
                     new webpack.HotModuleReplacementPlugin(),
                     new HtmlWebpackPlugin({
                         filename: 'index.html',

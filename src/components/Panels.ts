@@ -1,6 +1,5 @@
 
-import { animate } from "just-animate";
-import { VNode, VNodeProperties } from "maquette";
+import { VNode, VNodeProperties } from "frets";
 import { createEnterCssTransition } from "maquette-css-transitions";
 import { $, $$ } from "../base-styles";
 

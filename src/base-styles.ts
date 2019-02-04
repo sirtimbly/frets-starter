@@ -1,5 +1,5 @@
 
-    import * as Maquette from "maquette";
+  import {maquette as Maquette} from "frets";
 
     export default class BaseStyles {
         public chain: string[];

@@ -1,9 +1,9 @@
-import { animate } from "just-animate";
-import { VNode, VNodeProperties } from "maquette";
+import * as just from "just-animate";
+import { VNode, VNodeProperties } from "frets";
 import { $, $$ } from "../base-styles";
 
 const animateTableRow = (domNode: Element, properties: any) => {
-  animate({
+  just.animate({
     targets: domNode,
     duration: 512,
     props: {

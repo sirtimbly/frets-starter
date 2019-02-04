@@ -1,4 +1,4 @@
-import { VNode } from "maquette";
+import { VNode } from "frets";
 import { $$ } from "../base-styles";
 
 export const icon = (name: string): VNode => {

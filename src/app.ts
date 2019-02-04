@@ -6,10 +6,10 @@ import { renderRootView } from "./components/UiRoot";
 import AppProps from "./models/AppProps";
 import { registerRoutes, SampleScreens } from "./navigation";
 
-import { addPlugin } from "just-animate";
+import * as just from "just-animate";
 
-import { waapiPlugin } from "just-animate/lib/web";
-addPlugin(waapiPlugin);
+import { waapiPlugin } from "just-animate/lib.es2015/web";
+just.addPlugin(waapiPlugin);
 
 const startingCondition: AppProps = new AppProps();
 const startingActions = new SampleActions();

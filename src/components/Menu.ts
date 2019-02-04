@@ -1,5 +1,5 @@
 import { IFretsProps } from "frets";
-import { VNode, VNodeProperties } from "maquette";
+import { VNode, VNodeProperties } from "frets";
 import { SampleActions } from "../actions/SampleActions";
 import { $, $$ } from "../base-styles";
 import { SampleScreens, IKeyObject } from "../navigation";
