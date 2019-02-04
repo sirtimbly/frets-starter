@@ -9,7 +9,9 @@ import { registerRoutes } from "./navigation";
 const startingCondition: AppProps = new AppProps();
 const startingActions = new SampleActions();
 
-const F = new FRETS<AppProps, SampleActions>(startingCondition, startingActions);
+export type App = FRETS<AppProps, SampleActions>;
+
+const F: App = new FRETS<AppProps, SampleActions>(startingCondition, startingActions);
 
 F.validator = (newProps: Readonly<AppProps>, oldProps: AppProps): [AppProps, boolean] => {
   // debugger;

@@ -1,5 +1,6 @@
 import { FRETS } from "frets";
 import { SampleActions } from "./actions/SampleActions";
+import { App } from "./app";
 import AppProps, { SampleScreens } from "./models/AppProps";
 
 export const RouteKeys = {
@@ -7,21 +8,18 @@ export const RouteKeys = {
   Home: "Home",
 };
 
-export function registerRoutes
- (F: FRETS<AppProps, SampleActions>): FRETS<AppProps, SampleActions> {
+export function registerRoutes(F: App): App {
 
 F.actions.navAbout = F.registerAction((e: Event, props: Readonly<AppProps>): AppProps => {
   console.log("nav about");
   F.navToRoute(RouteKeys.About);
-  // return {...props, activeScreen: SampleScreens.About};
-  return props;
+  return {...props, activeScreen: SampleScreens.About};
 });
 
 F.actions.navHome = F.registerAction((e: Event, props: Readonly<AppProps>): AppProps => {
   console.log("nav home");
   F.navToRoute(RouteKeys.Home);
-  // return {...props, activeScreen: SampleScreens.Home};
-  return props;
+  return {...props, activeScreen: SampleScreens.Home};
 });
 
 F.actions.screenActions[SampleScreens.Home] = F.actions.navHome;

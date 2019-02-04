@@ -27,7 +27,7 @@ const getAnimateCounter = (oldValue: string, newValue: string, up: boolean): ani
   const origin: number = up ? 20 : -20;
 
   return (domNode: Element, properties: any) => {
-    console.log("animate the counter");
+    // console.log("animate the counter");
     // debugger;
     sequence([{
       targets: domNode,

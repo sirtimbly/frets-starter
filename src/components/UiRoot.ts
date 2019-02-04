@@ -5,6 +5,7 @@ import { VNode } from "maquette";
 import { FRETS } from "frets";
 import { SampleActions } from "../actions/SampleActions";
 
+import { App } from "../app.ts";
 import AppProps, { SampleScreens } from "../models/AppProps";
 import { Menu } from "./Menu";
 import { alert } from "./Notifications";
@@ -12,7 +13,7 @@ import { renderAbout } from "./UiAbout";
 import { $grid } from "./UiAtoms";
 import { renderHome } from "./UiHome";
 
-export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
+export const renderRootView = (app: App ): VNode => {
   const { modelProps: props, actions } = app;
   const idField = app.registerField<string>("id", "1");
   return $.div.flex.flexColumn.h([

@@ -155,6 +155,8 @@ get panelPanelH2() { return this.add("panel .panel .h2"); }
 get shadow() { return this.add("shadow"); }
 get littleCircle() { return this.add("little-circle"); }
 get absAlertTopRight() { return this.add("abs-alert-top-right"); }
+get fadeIn() { return this.add("fade-in"); }
+get fadeInActive() { return this.add("fade-in-active"); }
 get fullWidth() { return this.add("full-width"); }
 get bgLightGray() { return this.add("bg-light-gray"); }
 get lightBlue() { return this.add("light-blue"); }
