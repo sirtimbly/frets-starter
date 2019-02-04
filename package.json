@@ -90,7 +90,9 @@
     "basscss": "^8.0.10",
     "basscss-addons": "^1.0.0",
     "basscss-basic": "^1.0.0",
+    "just-animate": "^2.5.1",
     "maquette": "^3.3.3",
+    "maquette-css-transitions": "^1.1.0",
     "moment": "^2.24.0"
   }
 }

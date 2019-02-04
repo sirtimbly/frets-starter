@@ -39,7 +39,21 @@ F.validator = (newProps: Readonly<AppProps>, oldProps: AppProps): [AppProps, boo
 };
 
 F.calculator = (props: Readonly<AppProps>, oldProps: AppProps): AppProps => {
-  return { ...props, timeCounter: moment().add(props.counter, "hours").format("ddd h a") };
+  let vals;
+  if (props.users.length > oldProps.users.length) {
+    const oldId = props.registeredFieldsValues.id;
+    vals = { ...props.registeredFieldsValues, id: Number.parseInt(oldId, 10) + 1 };
+  } else {
+    vals = props.registeredFieldsValues;
+  }
+
+  return {
+    ...props,
+    registeredFieldsValues: vals,
+    counterIncreased: !!(oldProps.counter < props.counter),
+    previousTime: moment().add(oldProps.counter, "hours").format("ddd h a"),
+    timeCounter: moment().add(props.counter, "hours").format("ddd h a"),
+   };
 };
 
 F.actions.increment = F.registerAction((e: Event, props: Readonly<AppProps>): AppProps => {
@@ -69,7 +83,12 @@ F.actions.loadUser = F.registerAction((e: Event, props: Readonly<AppProps>) => {
       } else {
         user = json;
       }
-      F.render({...props, user, isLoading: false, networkError: ""});
+      F.render({
+        ...props,
+        user,
+        users: [...props.users, user],
+        isLoading: false,
+        networkError: ""});
     })
     .catch((err: Error) => {
       F.render({...props, isLoading: false, networkError: "Error: " + err.message });
@@ -81,3 +100,4 @@ registerRoutes(F);
 
 F.registerView(renderRootView);
 F.mountTo("mainapp");
+

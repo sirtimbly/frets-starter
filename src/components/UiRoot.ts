@@ -19,8 +19,7 @@ export const renderRootView = (app: FRETS<AppProps, SampleActions> ): VNode => {
     $.div.bgSilver.p2.borderBottom.borderGray.shadow.flex.justifyBetween.Bold.h([
       $.div.h(["My FRETS App"]),
     ]),
-    props.messages.length
-      ? alert(props.messages) : "",
+    alert(props.messages),
     $grid.h([
       $.div.col.col_2.smCol.smCol_12.pt2.h([Menu(props, false, actions)]),
       $.div.col.col_10.smCol.smCol_12.px2.h([

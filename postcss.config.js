@@ -20,7 +20,7 @@ module.exports = {
         { extractor: purgeFromFrets, extensions: ["ts"] }
       ],
       whitelist: ['html', 'body', 'input', 'button', 'select'],
-      whitelistPatterns: [/icon/, /green/],
+      whitelistPatterns: [/icon/, /green/, /fade/],
       rejected: true
     })
     // cssnano({

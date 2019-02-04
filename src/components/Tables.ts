@@ -1,5 +1,21 @@
 import { VNode, VNodeProperties } from "maquette";
 import { $, $$ } from "../base-styles";
+import { animate } from "just-animate";
+
+const animateTableRow = (domNode: Element, properties: any) => {
+  console.log("animate table row");
+  animate({
+    targets: domNode,
+    duration: 512,
+    props: {
+      style: ["transform-origin: 0 0 0", "transform-origin: 0 0 0"]
+    },
+    web: {
+      opacity: [0, 1],
+      scaleY: [0, 1],
+    },
+  }).play();
+};
 
 export interface IColumn {
   prop: string;
@@ -19,7 +35,10 @@ export const Table = (columns: IColumn[], data: any[] ): VNode => {
   }
   return $$("table").fullWidth.collapse.h([
     row.h(columns.map((c) => header.h([c.label]))),
-    ...data.map((d) => row.h([
+    ...data.map((d) => row.h({
+      enterAnimation: animateTableRow,
+      key: d["id"]
+    }, [
       ...columns.map((c) => {
         // debugger;
         return cell.h([ `${d[c.prop]}` ]);
@@ -27,3 +46,5 @@ export const Table = (columns: IColumn[], data: any[] ): VNode => {
     ])),
   ]);
 };
+
+

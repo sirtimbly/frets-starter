@@ -1,4 +1,7 @@
+
+import { animate } from "just-animate";
 import { VNode, VNodeProperties } from "maquette";
+import { createEnterCssTransition } from "maquette-css-transitions";
 import { $, $$ } from "../base-styles";
 
 /**
@@ -11,9 +14,15 @@ export const Panel = (isHoriz?: boolean,
                       ...nodes: Array<string | VNode>): VNode => {
   let node = $.div.panel.bgWhite.shadow.smP1.p3.my2.rounded.leftAlign.overflowAuto;
   const titleNode = $.div.h2.pb2.h([title || ""]);
+
+  properties = Object.assign(properties, {
+    key: properties.key || title + nodes.length + 1,
+    enterAnimation: createEnterCssTransition("fade-in"),
+  });
+
   if (isHoriz) {
     if (title && title.length) {
-      return node.leftAlign.h([
+      return node.leftAlign.h(properties, [
         titleNode,
         $.div.flex.alignMiddle.justifyCenter.h(nodes),
       ]);
@@ -24,6 +33,8 @@ export const Panel = (isHoriz?: boolean,
   if (title) {
     nodes = [titleNode, ...nodes];
   }
+
+  // debugger;
   return node.h(properties, nodes);
 };
 

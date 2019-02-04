@@ -328,6 +328,17 @@ h4,
     }
 }
 
+.fade-in {
+    transition: 200ms ease-out all;
+    transform: translateY(-16px);
+    opacity: 0;
+}
+
+.fade-in-active {
+    opacity: 1;
+    transform: translateY(0px)
+}
+
 .full-width {
     width: 100%;
 }
