@@ -6,6 +6,9 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 var MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
+const WebpackQRCodePlugin = require('webpack-dev-server-qr-code');
+
+
 const production = process.env.NODE_ENV === "production";
 
 module.exports = (env = {}) => {
@@ -20,6 +23,7 @@ return {
     devServer: {
         contentBase: __dirname + '/dist/',
         historyApiFallback: true,
+        host: '0.0.0.0',
         port: 8080,
         // proxy: {
         //     '/.netlify/functions/*': {
@@ -80,8 +84,9 @@ return {
         // ]
     },
     plugins: [
+        new WebpackQRCodePlugin(),
         //strip out all locales except EN
-        new MomentLocalesPlugin(),
+
         // new webpack.optimize.CommonsChunkPlugin('common.js'),
         new webpack.EnvironmentPlugin([
             'NODE_ENV'
