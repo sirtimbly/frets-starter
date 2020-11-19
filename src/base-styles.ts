@@ -640,6 +640,7 @@ get borderMaroon() { return this.add("border-maroon"); }
 get textTransformNone() { return this.add("text-transform-none"); }
 get drinkForm() { return this.add("drink-form"); }
 get panel() { return this.add("panel"); }
+get panelPanel() { return this.add("panel .panel"); }
 get panelPanelH2() { return this.add("panel .panel .h2"); }
 get btnBorder() { return this.add("btn.border"); }
 get shadow() { return this.add("shadow"); }

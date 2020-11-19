@@ -11,8 +11,8 @@ export const Panel = (isHoriz?: boolean,
                       title?: string,
                       properties?: VNodeProperties,
                       ...nodes: Array<string | VNode>): VNode => {
-  let node = $.div.panel.bgWhite.shadow.smP1.p3.my2.rounded.leftAlign.overflowAuto;
-  const titleNode = $.div.h2.pb2.h([title || ""]);
+  let node = $.div.panel.bgWhite.shadow.my2.rounded.leftAlign.overflowAuto;
+  const titleNode = $.div.h2.pb2.m1.h([title || ""]);
 
   properties = Object.assign(properties, {
     key: properties.key || title + nodes.length + 1,
@@ -21,9 +21,9 @@ export const Panel = (isHoriz?: boolean,
 
   if (isHoriz) {
     if (title && title.length) {
-      return node.leftAlign.h(properties, [
+      return $.div.leftAlign.h(properties, [
         titleNode,
-        $.div.flex.alignMiddle.justifyCenter.h(nodes),
+        $.div.flex.justifyBetween.h(nodes),
       ]);
     } else {
       node = node.flex.alignMiddle.justifyCenter;

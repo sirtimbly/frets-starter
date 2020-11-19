@@ -55,7 +55,7 @@ const getAnimateCounter = (oldValue: string, newValue: string, up: boolean): ani
 
 
 export const renderHome = (app: App) => {
-  const {modelProps: props, actions} = app;
+  const { modelProps: props, actions } = app;
 
   return VPanel("Example Frontend Application", {},
     $.div.leftAlign.pb2.h([
@@ -64,19 +64,21 @@ export const renderHome = (app: App) => {
         "Demonstrates dynamic calculation, routing, async data, and validation."]),
     ]),
     HPanel("Simple Incrementer with Validation", { key: "incrementer" },
-      $.button.btn.btnOutline.h(
-        {
-          onclick: actions.decrement,
-        },
-        ["-"],
-      ),
-      $.button.btn.btnOutline.ml2.h(
-        {
-          onclick: actions.increment,
-        },
-        ["+"],
-      ),
-      $.div.bgLightGray.rounded.p1.mx1.h2.h([props.counter.toFixed() + " hours"]),
+      $.div.p2.flex.nowrap.h([
+        $.button.btn.btnOutline.h(
+          {
+            onclick: actions.decrement,
+          },
+          ["-"],
+        ),
+        $.button.btn.btnOutline.ml2.h(
+          {
+            onclick: actions.increment,
+          },
+          ["+"],
+        ),
+        $.div.bgLightGray.rounded.p1.mx1.h2.h([props.counter.toFixed() + " hours"]),
+      ]),
       $.div.h([$.div.lightBlue.rounded.mx1.p1.h2.h({
         updateAnimation: getAnimateCounter(props.previousTime, props.timeCounter, props.counterIncreased),
       }, [props.timeCounter])]),
