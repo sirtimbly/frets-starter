@@ -95,7 +95,7 @@
     "just-animate": "^2.5.1",
     "maquette": "^3.3.3",
     "maquette-css-transitions": "^1.1.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "webpack-dev-server-qr-code": "^1.0.2"
   }
 }
